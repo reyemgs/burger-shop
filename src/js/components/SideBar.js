@@ -1,17 +1,27 @@
-class SideBar {
+import ProductCategoryList from './ProductCategoryList.js';
+import Basket from './Basket.js';
+
+export default class SideBar {
     constructor() {
         this.sideBar = document.querySelector('#sidebar-wrapper');
-        this.menuItems = [''];
+        this.sideBar.className = 'active';
+        this.sideBarButton = document.querySelector('.fa-bars');
+
+        this.productCategoryList = new ProductCategoryList();
+        this.basket = new Basket();
     }
 
     createSideBar() {
-        const menu = document.createElement('ul');
-        menu.className = 'sidebar';
-        for (let i = 0; i < 7; i++) {
-            const li = document.createElement('li');
-            li.innerHTML = i;
-            menu.append(li);
-        }
-        this.sideBar.append(menu);
+        this.productCategoryList.render();
+        this.basket.render();
+    }
+
+    render() {
+        this.createSideBar();
+        this.sideBarButton.addEventListener('click', () => this.toggleSideBar());
+    }
+
+    toggleSideBar() {
+        this.sideBar.classList.toggle('active');
     }
 }

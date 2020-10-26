@@ -1,5 +1,20 @@
 $yellow: #fad045;
 $yellow-text: #6b581a;
+$yellow-sidebar: #fff8e2; 
+$white: #ffffff;
+$grey-button: #757575;
+$grey-border: #999999;
+$description: #3585aa;
+
+@mixin border-top-radius {
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+@mixin border-bottom-radius {
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
 
 * {
     margin: 0;
@@ -20,5 +35,141 @@ header {
         font-weight: bold;
         color: $yellow-text;
         -webkit-user-select: none;
+    }
+    .fa-bars {
+        position: absolute;
+        display: block;
+        top: 5px;
+        left: 25px;
+        color: $yellow-text;
+    }
+}
+
+/* SIDEBAR */
+#sidebar-wrapper {
+    position: fixed;
+    width: 350px;
+    left: -350px;
+    height: 100%;
+    transition: all 200ms;
+    &.active {
+        left: 0px;
+        width: 25%;
+        float: left;
+        position: relative;
+    }
+    .category-menu {
+        padding: 0px;
+        margin: 20px auto 0px;
+        width: 90%;
+        background-color: $white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        border-radius: 8px;
+        -webkit-user-select: none;
+        .menu-item {
+            padding: 10px 15px;
+            width: 100%;
+            font-size: 20px;
+            list-style: none;
+            color: $yellow-text;
+            &:hover {
+                background-color: $yellow;
+            }
+            &:first-child {
+                @include border-top-radius();
+            }
+            &:last-child {
+                @include border-bottom-radius();
+            }
+        }
+    }
+
+    .basket {
+        padding: 0px;
+        margin: 20px auto 0px;
+        width: 90%;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        border-radius: 8px;
+        -webkit-user-select: none;
+        .basket-header {
+            @include border-top-radius();
+            display: block;
+            padding: 10px 15px;
+            font-size: 30px;
+            font-weight: bold;
+            text-align: center;
+            color: $yellow-text;
+            background-color: $yellow;
+        }
+        .basket-body {
+            @include border-bottom-radius();
+            background-color: $yellow-sidebar;
+            .order-button {
+                height: 30px;
+                width: 150px;
+                transform: translate(55%, 0);
+                left: 50%;
+                text-align: center;
+                font-weight: bold;
+                border: 2px solid $grey-border;
+                border-radius: 8px;
+                outline: none;
+                background-color: $grey-button;
+                color: white;
+                transition: 0.1s;
+                overflow: hidden;
+                &:hover {
+                    background-color: $yellow;
+                    color: $yellow-text;
+                }
+            }
+        }
+    }
+}
+
+#rightside-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+    height: 100%;
+    .product-card-wrapper {
+        width: 30%;
+        margin: 20px;
+        margin-bottom: 30px;
+        height: 300px;
+        -webkit-user-select: none;
+        .product-market {
+            display: block;
+            margin: auto;
+        }
+        .product-image {
+            display: block; 
+            margin: auto;
+            width: 200px;
+            height: 200px;
+            border: 10px solid $yellow;
+            border-radius: 200px;
+        }
+        .product-name {
+            display: block;
+            padding: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: $yellow-text;
+        }
+        .product-description {
+            margin: auto;
+            width: 200px;
+            padding: 5px;
+            font-size: 15px;
+            text-align: center;
+            text-decoration: underline;
+            border-top: 4px solid $description;
+            border-bottom: 4px solid $description;
+            color: $description;
+        }
     }
 }
