@@ -233,7 +233,7 @@
       "weight": 1,
       "components": {}
     },
-      {
+    {
       "name": "Доп сыр (в бургер)",
       "description": "Дополнительная порция сыра в любой бургер",
       "image": "/i/ingredients/products/cheese.png",
@@ -243,7 +243,7 @@
       "type": "single",
       "weight": 1
     },
-      {
+    {
       "name": "ФишБургер",
       "description": "Рыбная котлета с сыром и соусом тар-тар",
       "image": "/i/burgers/fish2.png",
@@ -263,7 +263,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Дарт Вейдер",
       "description": "С большой говяжей котлетой, сыром, салатом",
       "image": "/i/burgers/darthvader.png",
@@ -273,7 +273,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Деревенский",
       "description": "Со свиной котлетой, беконом, драником и салатом",
       "image": "/i/burgers/derevenskiy.png",
@@ -283,7 +283,7 @@
       "type": "single",
       "weight": 1
     },
-        {
+    {
       "name": "Имперский",
       "description": "С куриным филе, картофельным драником, сыром, салатом",
       "image": "/i/burgers/imperial.png",
@@ -293,7 +293,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Вестерн",
       "description": "Со свиной котлетой, луковыми кольцами и соусом чипотл",
       "image": "/i/burgers/western.png",
@@ -323,7 +323,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Пикантный бургер",
       "description": "куриная котлета, салат, лук, сол. огурец, сыр и медовая горчица",
       "image": "/i/burgers/spisy.png",
@@ -383,7 +383,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Пири-пири Бургер",
       "description": "С острым куриным филе",
       "image": "/i/burgers/burgerskurinymfile.png",
@@ -393,7 +393,7 @@
       "type": "single",
       "weight": 1
     },
-        {
+    {
       "name": "Чизбургер",
       "description": "С говяжей котлетой, кетчупом и сыром, без овощей",
       "image": "/i/burgers/cheesburger.png",
@@ -413,7 +413,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Чикенбург",
       "description": "Бургер с куриной котлетой в панировке",
       "image": "/i/burgers/chikenburger.png",
@@ -423,7 +423,7 @@
       "type": "single",
       "weight": 1
     },
-    	{
+    {
       "name": "Кубит",
       "description": "С куриным филе и картофельным драником",
       "image": "/i/salads/kubit.png",
@@ -433,7 +433,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Ролл с креветкой (3шт)",
       "description": "Ролл с креветкой в панировке и соусом тар-тар",
       "image": "/i/salads/tortiliya.png",
@@ -443,7 +443,7 @@
       "type": "single",
       "weight": 1
     },
-        {
+    {
       "name": "Овощной салат",
       "description": "Вегетарианский салат (можно в пост)",
       "image": "/i/salads/vegasalad.png",
@@ -483,7 +483,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Чикен террияки байтс",
       "description": "6 кусочков филе в соусе террияки с салатом и кунжутом",
       "image": "/i/salads/teriaki.png",
@@ -503,7 +503,7 @@
       "type": "single",
       "weight": 1
     },
-        {
+    {
       "name": "Куриная лапша",
       "description": "На курином бульоне с домашней лапшой",
       "image": "/i/chicken/kursup.png",
@@ -593,7 +593,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус чесночный (порц)",
       "description": "",
       "image": "/i/chicken/chesnochniy1.png",
@@ -603,7 +603,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус карри (порц)",
       "description": "",
       "image": "/i/chicken/curry1.png",
@@ -613,7 +613,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус кисло-сладкий (порц)",
       "description": "",
       "image": "/i/chicken/kislosladkiy2.png",
@@ -623,7 +623,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус горчичный (порц)",
       "description": "",
       "image": "/i/chicken/gorchichniy1.png",
@@ -633,7 +633,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус сальса (порц)",
       "description": "островатый",
       "image": "/i/chicken/salsa1.png",
@@ -643,7 +643,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус барбекью (порц)",
       "description": "с дымком",
       "image": "/i/chicken/bbq1.png",
@@ -653,7 +653,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Соус томатный кетчуп (порц)",
       "description": "классический вкус Heinz",
       "image": "/i/chicken/tomatniy1.png",
@@ -673,7 +673,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Лукошко",
       "description": "С куриным филе, жареными грибочками, соленым огурцами и сыром",
       "image": "/i/salads/lukoshko.png",
@@ -683,7 +683,7 @@
       "type": "single",
       "weight": 1
     },
-	{
+    {
       "name": "Салат с тунцом",
       "description": "Тунец с салатом, болгарским перцем, маслинами и кукурузой",
       "image": "/i/salads/saladtun.png",
@@ -763,7 +763,7 @@
       "type": "single",
       "weight": 1
     },
-     {
+    {
       "name": "Маффин",
       "description": "",
       "image": "/i/drinks/muffin.jpg",
@@ -813,7 +813,7 @@
       "type": "single",
       "weight": 1
     },
-      {
+    {
       "name": "Кленовый пекан",
       "description": "самая популярная выпечка Subway",
       "image": "/i/drinks/maple-pecan.png",
@@ -893,7 +893,7 @@
       "type": "single",
       "weight": 1
     },
-       {
+    {
       "name": "Круассан",
       "description": "",
       "image": "/i/drinks/croissant.jpg",
@@ -903,7 +903,7 @@
       "type": "single",
       "weight": 1
     },
-        {
+    {
       "name": "Pepsi",
       "description": "Объемом от 0.4 Л, на выбор",
       "image": "/i/drinks/pepsi.jpg",
@@ -919,156 +919,156 @@
       }
     },
     {
-    "name": "Вегетарианская 35см",
+      "name": "Вегетарианская 35см",
       "description": "Лук, перец, томаты, сыр",
       "image": "/i/pizza/Veggie.png",
       "price": 250,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
+    },
     {
-    "name": "Pizza Spot (фирм) 35см",
+      "name": "Pizza Spot (фирм) 35см",
       "description": "бекон, сыр, руккола",
       "image": "/i/pizza/spotfirm.png",
       "price": 300,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-          {
-    "name": "Маргарита 35см",
+    },
+    {
+      "name": "Маргарита 35см",
       "description": "Базилик, орегано, моцарелла",
       "image": "/i/pizza/margo.png",
       "price": 250,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-          {
-    "name": "Грибная 35см",
+    },
+    {
+      "name": "Грибная 35см",
       "description": "Орегано, пармезан, шампиньоны, моцарелла",
       "image": "/i/pizza/mashroom.png",
       "price": 250,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-          {
-    "name": "Баварская 35см",
+    },
+    {
+      "name": "Баварская 35см",
       "description": "Сосиски, охотничьи колбаски, моцарелла, пармезан",
       "image": "/i/pizza/bavar.png",
       "price": 300,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                {
-    "name": "Пепперони 35см",
+    },
+    {
+      "name": "Пепперони 35см",
       "description": "Пепперони, моцарелла",
       "image": "/i/pizza/pepperoni.png",
       "price": 300,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                      {
-    "name": "Четыре Сыра Кватро Формаджио 35см",
+    },
+    {
+      "name": "Четыре Сыра Кватро Формаджио 35см",
       "description": "Творожный сыр, гауда, моцарелла",
       "image": "/i/pizza/Cheese.png",
       "price": 350,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                      {
-    "name": "Куриная 35см",
+    },
+    {
+      "name": "Куриная 35см",
       "description": "курица копченая и маринованная, моцарелла, томаты",
       "image": "/i/pizza/chicken.png",
       "price": 350,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                            {
-    "name": "Ветчина с грибами 35см",
+    },
+    {
+      "name": "Ветчина с грибами 35см",
       "description": "Ветчина, шампиньоны, моцарелла",
       "image": "/i/pizza/hammashroom.png",
       "price": 350,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                            {
-    "name": "Морская 35см",
+    },
+    {
+      "name": "Морская 35см",
       "description": "морепродукты, томаты, моцарелла",
       "image": "/i/pizza/sea.png",
       "price": 350,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                            {
-    "name": "Сицилийская (ОСТРАЯ) 35см",
+    },
+    {
+      "name": "Сицилийская (ОСТРАЯ) 35см",
       "description": "Перец, лук, халапеньо, карбонат, курица",
       "image": "/i/pizza/sicil.png",
       "price": 400,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                            {
-    "name": "Гавайская 35см",
+    },
+    {
+      "name": "Гавайская 35см",
       "description": "курица, ананасы, белый соус",
       "image": "/i/pizza/Hawaiian.png",
       "price": 400,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                                  {
-    "name": "Карбонара 35см",
+    },
+    {
+      "name": "Карбонара 35см",
       "description": "бекон, пармезан, моцарелла, орегано",
       "image": "/i/pizza/karbonara.png",
       "price": 400,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                                  {
-    "name": "Мясная 35см",
+    },
+    {
+      "name": "Мясная 35см",
       "description": "Карбонат, бекон, курица, сыр",
       "image": "/i/pizza/meat.png",
       "price": 450,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-                                        {
-    "name": "Четыре Сезона Кватро Стаджиони 35см",
+    },
+    {
+      "name": "Четыре Сезона Кватро Стаджиони 35см",
       "description": "Каперсы, анчоусы, артишоки, грибы, ветчина",
       "image": "/i/pizza/4.png",
       "price": 450,
       "category": "pizza",
-      "market": "",
+      "market": "sfc",
       "type": "single",
       "weight": 1
-      },
-{
+    },
+    {
       "name": "Доп сыр (в шаурму)",
       "description": "Дополнительная порция сыра в любую шаурму",
       "image": "/i/ingredients/products/cheese.png",
@@ -1078,7 +1078,7 @@
       "type": "single",
       "weight": 1
     },
-{
+    {
       "name": "Буррито с говядиной (ОСТР)",
       "description": "Говядина, Халапеньо, фасоль, сметана, сыр",
       "image": "/i/shaurma/burrito.jpg",
@@ -1097,7 +1097,7 @@
       "market": "doner",
       "type": "single",
       "weight": 1
-    },    
+    },
     {
       "name": "Фахитос с курицей",
       "description": "Курица, мексиканская смесь, соус гуакамоле, грибы, маслины",
@@ -1391,7 +1391,7 @@
       "description": "",
       "price": 0,
       "image": "/i/ingredients/vegetables/tomato.png"
-         },
+    },
     "pickled-cucumber": {
       "name": "Соленый огурец",
       "description": "",

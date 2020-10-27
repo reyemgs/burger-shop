@@ -4,6 +4,10 @@
   font-family: "Roboto", sans-serif;
 }
 
+body {
+  background: #f8f8f8;
+}
+
 header {
   margin: auto;
   height: 60px;
@@ -37,7 +41,6 @@ header .fa-bars {
 }
 #sidebar-wrapper.active {
   left: 0px;
-  width: 25%;
   float: left;
   position: relative;
 }
@@ -45,7 +48,7 @@ header .fa-bars {
   padding: 0px;
   margin: 20px auto 0px;
   width: 90%;
-  background-color: #ffffff;
+  background: #ffffff;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   -webkit-user-select: none;
@@ -54,6 +57,7 @@ header .fa-bars {
   padding: 10px 15px;
   width: 100%;
   font-size: 20px;
+  font-weight: bold;
   list-style: none;
   color: #6b581a;
 }
@@ -85,33 +89,58 @@ header .fa-bars {
   font-weight: bold;
   text-align: center;
   color: #6b581a;
-  background-color: #fad045;
+  background: #fad045;
 }
 #sidebar-wrapper .basket .basket-body {
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
-  background-color: #fff8e2;
+  background: #fff8e2;
+  padding-bottom: 5px;
+}
+#sidebar-wrapper .basket .basket-body .basket-label-wrapper {
+  width: 90%;
+  margin: auto;
+  padding: 25px 15px;
+  border-bottom: 2px solid #6b581a;
+}
+#sidebar-wrapper .basket .basket-body .basket-label-wrapper .basket-name-label {
+  float: left;
+  width: 50%;
+  text-align: left;
+}
+#sidebar-wrapper .basket .basket-body .basket-label-wrapper .basket-quantity-label {
+  float: right;
+  width: 50%;
+  text-align: right;
+}
+#sidebar-wrapper .basket .basket-body .basket-total-price {
+  display: block;
+  margin: auto;
+  padding: 15px;
+  text-align: center;
+  font-size: 20px;
 }
 #sidebar-wrapper .basket .basket-body .order-button {
+  display: block;
+  margin: 10px auto;
   height: 30px;
   width: 150px;
-  transform: translate(55%, 0);
-  left: 50%;
   text-align: center;
   font-weight: bold;
   border: 2px solid #999999;
   border-radius: 8px;
   outline: none;
-  background-color: #757575;
+  background: #757575;
   color: white;
   transition: 0.1s;
   overflow: hidden;
 }
 #sidebar-wrapper .basket .basket-body .order-button:hover {
-  background-color: #fad045;
+  background: #fad045;
   color: #6b581a;
 }
 
+/* RIGHTSIDE */
 #rightside-wrapper {
   display: flex;
   justify-content: space-between;
@@ -121,10 +150,14 @@ header .fa-bars {
   height: 100%;
 }
 #rightside-wrapper .product-card-wrapper {
-  width: 30%;
+  display: block;
+  width: 25%;
   margin: 20px;
-  margin-bottom: 30px;
-  height: 300px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  height: 100%;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
   -webkit-user-select: none;
 }
 #rightside-wrapper .product-card-wrapper .product-market {
@@ -136,6 +169,7 @@ header .fa-bars {
   margin: auto;
   width: 200px;
   height: 200px;
+  background: #ffffff;
   border: 10px solid #fad045;
   border-radius: 200px;
 }
@@ -150,13 +184,66 @@ header .fa-bars {
 #rightside-wrapper .product-card-wrapper .product-description {
   margin: auto;
   width: 200px;
+  height: 50px;
   padding: 5px;
-  font-size: 15px;
+  font-size: 12px;
   text-align: center;
   text-decoration: underline;
   border-top: 4px solid #3585aa;
   border-bottom: 4px solid #3585aa;
   color: #3585aa;
+}
+#rightside-wrapper .product-card-wrapper .product-price {
+  display: block;
+  padding: 5px;
+  margin: auto;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #aa3535;
+}
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper {
+  width: 200px;
+  height: 125px;
+  margin: auto;
+  text-align: center;
+  border: 4px solid #fad045;
+  border-radius: 8px;
+  background: #fff8e2;
+}
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .product-amount-label {
+  display: block;
+}
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .product-amount {
+  display: inline-block;
+  background: #ffffff;
+  margin: auto;
+  width: 40px;
+  height: 20px;
+  border: 1px solid #999999;
+  border-radius: 5px;
+}
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .increase-button,
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .decrease-button {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #6b581a;
+}
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .increase-button:hover,
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .decrease-button:hover {
+  color: #fad045;
+}
+#rightside-wrapper .product-card-wrapper .set-amount-wrapper .in-basket-button {
+  display: block;
+  margin: 10px auto;
+  width: 150px;
+  height: 40px;
+  color: #6b581a;
+  font-size: 18px;
+  font-weight: bold;
+  outline: none;
+  background: #fad045;
+  border-radius: 8px;
 }
 
 /*# sourceMappingURL=output.css.map */
