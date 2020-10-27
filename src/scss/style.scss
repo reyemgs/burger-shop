@@ -1,6 +1,6 @@
 $yellow: #fad045;
 $yellow-text: #6b581a;
-$yellow-sidebar: #fff8e2; 
+$yellow-sidebar: #fff8e2;
 $white: #ffffff;
 $grey-button: #757575;
 $grey-border: #999999;
@@ -21,7 +21,7 @@ $price: #aa3535;
 * {
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
 }
 
 body {
@@ -68,7 +68,7 @@ header {
         margin: 20px auto 0px;
         width: 90%;
         background: $white;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         -webkit-user-select: none;
         .menu-item {
@@ -94,7 +94,7 @@ header {
         padding: 0px;
         margin: 20px auto 0px;
         width: 90%;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         -webkit-user-select: none;
         .basket-header {
@@ -173,14 +173,14 @@ header {
         padding-bottom: 20px;
         height: 100%;
         border-radius: 15px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         -webkit-user-select: none;
         .product-market {
             display: block;
             margin: auto;
         }
         .product-image {
-            display: block; 
+            display: block;
             margin: auto;
             width: 200px;
             height: 200px;
