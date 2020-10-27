@@ -1,5 +1,3 @@
-import Basket from './Basket';
-
 export default class ProductCard {
     constructor(item, response) {
         this.rightSideWrapper = document.querySelector('#rightside-wrapper');

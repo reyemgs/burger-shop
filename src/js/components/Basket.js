@@ -24,6 +24,8 @@ export default class Basket {
         basketNameLabel.innerHTML = 'Название';
         basketQuantityLabel.innerHTML = 'Количество';
 
+        const basketProductsWrapper = document.createElement('div');
+
         const basketTotalPrice = document.createElement('span');
         basketTotalPrice.className = 'basket-total-price';
         basketTotalPrice.innerHTML = `Итого: ${this.totalPrice} руб.`;
@@ -33,7 +35,12 @@ export default class Basket {
         basketOrderButton.innerHTML = 'ОФОРМИТЬ ЗАКАЗ';
 
         basketLabelWrapper.append(basketNameLabel, basketQuantityLabel);
-        basketBody.append(basketLabelWrapper, basketTotalPrice, basketOrderButton);
+        basketBody.append(
+            basketLabelWrapper,
+            basketProductsWrapper,
+            basketTotalPrice,
+            basketOrderButton
+        );
         basketWrapper.append(basketHeader, basketBody);
         this.sideBar.append(basketWrapper);
     }
