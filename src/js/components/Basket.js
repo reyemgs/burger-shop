@@ -1,7 +1,51 @@
 export default class Basket {
     constructor() {
         this.sideBar = document.querySelector('#sidebar-wrapper');
+        this.addedProducts = [];
         this.totalPrice = 0;
+    }
+
+    isAdded(product) {
+        return (
+            this.addedProducts.length != 0 &&
+            this.addedProducts.some(item => item.id === product.id)
+        );
+    }
+
+    addProduct(product) {
+        if (this.isAdded(product)) {
+            return;
+        }
+
+        const basketProductsWrapper = document.getElementById(
+            'basket-content-wrapper'
+        );
+        const basketContent = document.createElement('div');
+        basketContent.className = 'basket-content';
+
+        const basketProductName = document.createElement('span');
+        basketProductName.className = 'basket-product-name';
+        basketProductName.innerHTML = product.name;
+
+        const basketProductQuantity = document.createElement('span');
+        basketProductQuantity.className = 'basket-product-quantity';
+        basketProductQuantity.innerHTML = product.productQuantity;
+
+        const basketTotalPrice = document.querySelector('.basket-total-price');
+        this.updateTotalPrice(
+            basketTotalPrice,
+            product.price,
+            product.productQuantity
+        );
+
+        basketContent.append(basketProductName, basketProductQuantity);
+        basketProductsWrapper.append(basketContent);
+        this.addedProducts.push(product);
+    }
+
+    updateTotalPrice(elem, price, quantity) {
+        this.totalPrice += price * quantity;
+        elem.innerHTML = `Итого: ${this.totalPrice} руб.`;
     }
 
     createBasket() {
@@ -25,6 +69,8 @@ export default class Basket {
         basketQuantityLabel.innerHTML = 'Количество';
 
         const basketProductsWrapper = document.createElement('div');
+        basketProductsWrapper.className = 'basket-content-wrapper';
+        basketProductsWrapper.setAttribute('id', 'basket-content-wrapper');
 
         const basketTotalPrice = document.createElement('span');
         basketTotalPrice.className = 'basket-total-price';

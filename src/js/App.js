@@ -13,9 +13,9 @@ class App {
     init() {
         (async () => {
             await this.request();
-            await this.createProductItemsObj();
             await this.sidebar.render();
-            await this.renderProductCard();
+            await this.renderProductCards();
+            await this.events();
         })();
     }
 
@@ -25,16 +25,27 @@ class App {
         this.response = data;
     }
 
-    createProductItemsObj() {
-        for (let item of this.response.menu) {
-            this.productItems.push(item);
+    events() {
+        this.inBasketButton = document.querySelectorAll('.in-basket-button');
+        for (let button of this.inBasketButton) {
+            const id = button.getAttribute('id');
+            button.addEventListener('click', () => {
+                this.sidebar.basket.addProduct(this.getProductItem(id));
+            });
         }
     }
 
-    renderProductCard() {
-        for (let item of this.productItems) {
-            const productCard = new ProductCard(item, this.response);
-            productCard.createProductCard(item);
+    getProductItem(id) {
+        return this.productItems.find(productCard => productCard.id == id);
+    }
+
+    renderProductCards() {
+        let id = 1;
+        for (let item of this.response.menu) {
+            item.id = id++;
+            let productCard = new ProductCard(item);
+            this.productItems.push(productCard);
+            productCard.createProductCard(this.response);
         }
     }
 }
