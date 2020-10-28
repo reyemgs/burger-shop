@@ -12,11 +12,23 @@ export default class Basket {
         );
     }
 
+    changedQuantity(product) {
+        return this.addedProducts.some(
+            item =>
+                item.id === product.id && item.quantity != product.productQuantity
+        );
+    }
+
     addProduct(product) {
         if (this.isAdded(product)) {
-            return;
+            if (this.changedQuantity(product)) {
+                this.updateQuantity(product);
+                this.updateProducts();
+                return;
+            } else {
+                return;
+            }
         }
-
         const basketProductsWrapper = document.getElementById(
             'basket-content-wrapper'
         );
@@ -46,6 +58,39 @@ export default class Basket {
     updateTotalPrice(elem, price, quantity) {
         this.totalPrice += price * quantity;
         elem.innerHTML = `Итого: ${this.totalPrice} руб.`;
+    }
+
+    updateQuantity(product) {
+        let item = this.addedProducts.find(item => item.id === product.id);
+        if (item.quantity != product.productQuantity) {
+            item.quantity = product.productQuantity;
+        }
+    }
+
+    updateProducts() {
+        const basketProductsWrapper = document.getElementById(
+            'basket-content-wrapper'
+        );
+        basketProductsWrapper.innerHTML = '';
+
+        for (const item of this.addedProducts) {
+            const basketContent = document.createElement('div');
+            basketContent.className = 'basket-content';
+
+            const basketProductName = document.createElement('span');
+            basketProductName.className = 'basket-product-name';
+            basketProductName.innerHTML = item.name;
+
+            const basketProductQuantity = document.createElement('span');
+            basketProductQuantity.className = 'basket-product-quantity';
+            basketProductQuantity.innerHTML = item.productQuantity;
+
+            const basketTotalPrice = document.querySelector('.basket-total-price');
+            basketTotalPrice.innerHTML = `Итого: ${this.totalPrice} руб.`;
+
+            basketContent.append(basketProductName, basketProductQuantity);
+            basketProductsWrapper.append(basketContent);
+        }
     }
 
     createBasket() {

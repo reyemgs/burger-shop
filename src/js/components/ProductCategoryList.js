@@ -17,6 +17,7 @@ export default class ProductCategoryList {
         menu.className = 'category-menu';
         for (let i = 0; i < this.menuItems.length; i++) {
             const li = document.createElement('li');
+            li.setAttribute('id', this.menuItems[i].category);
             li.className = 'menu-item';
             li.innerHTML = this.menuItems[i].name;
             menu.append(li);
