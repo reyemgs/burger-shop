@@ -27,10 +27,35 @@ class App {
 
     events() {
         this.inBasketButton = document.querySelectorAll('.in-basket-button');
+        this.increaseButton = document.querySelectorAll('.increase-button');
+        this.decreaseButton = document.querySelectorAll('.decrease-button');
+        this.totalPrice = document.querySelector('.basket-total-price');
         for (let button of this.inBasketButton) {
             const id = button.dataset.productCardId;
             button.addEventListener('click', () => {
                 this.sidebar.basket.addProduct(this.getProductItem(id));
+            });
+        }
+
+        for (let button of this.increaseButton) {
+            const id = button.getAttribute('data-increase-id');
+            const productQuantity = button.previousElementSibling;
+            button.addEventListener('click', () => {
+                this.getProductItem(id).increaseQuantity(productQuantity);
+                this.sidebar.basket.updateQuantity(this.getProductItem(id));
+                this.sidebar.basket.updateTotalPrice(this.totalPrice, this.sidebar.basket.addedProducts);
+                this.sidebar.basket.updateProducts();
+            });
+        }
+
+        for (let button of this.decreaseButton) {
+            const id = button.getAttribute('data-decrease-id');
+            const productQuantity = button.nextElementSibling;
+            button.addEventListener('click', () => {
+                this.getProductItem(id).decreaseQuantity(productQuantity);
+                this.sidebar.basket.updateQuantity(this.getProductItem(id));
+                this.sidebar.basket.updateTotalPrice(this.totalPrice, this.sidebar.basket.addedProducts);
+                this.sidebar.basket.updateProducts();
             });
         }
     }

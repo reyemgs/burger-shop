@@ -85,10 +85,12 @@ export default class ProductCard {
 
         const productIncreaseButton = document.createElement('div');
         productIncreaseButton.className = 'increase-button';
+        productIncreaseButton.setAttribute('data-increase-id', this.id);
         productIncreaseButton.innerHTML = '<i class="fas fa-plus-circle"></i>';
 
         const productDecreaseButton = document.createElement('div');
         productDecreaseButton.className = 'decrease-button';
+        productDecreaseButton.setAttribute('data-decrease-id', this.id);
         productDecreaseButton.innerHTML = '<i class="fas fa-minus-circle"></i>';
 
         productSetAmountWrapper.append(
@@ -99,9 +101,9 @@ export default class ProductCard {
             this.createInBasketButton()
         );
 
-        productIncreaseButton.addEventListener('click', () => this.increaseQuantity(productQuantity));
+        // productIncreaseButton.addEventListener('click', () => this.increaseQuantity(productQuantity));
 
-        productDecreaseButton.addEventListener('click', () => this.decreaseQuantity(productQuantity));
+        // productDecreaseButton.addEventListener('click', () => this.decreaseQuantity(productQuantity));
 
         return productSetAmountWrapper;
     }
