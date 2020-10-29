@@ -70,24 +70,25 @@ export default class ProductCard {
     createInBasketButton() {
         const productInBasketButton = document.createElement('button');
         productInBasketButton.className = 'in-basket-button';
-        productInBasketButton.setAttribute('id', this.id);
+        productInBasketButton.setAttribute('data-product-card-id', this.id);
         productInBasketButton.innerHTML = 'В КОРЗИНУ';
         return productInBasketButton;
     }
 
     createSetAmountWrapper() {
         const productSetAmountWrapper = document.createElement('div');
-        const productQuantity = document.createElement('span');
-        const productIncreaseButton = document.createElement('div');
-        const productDecreaseButton = document.createElement('div');
-
         productSetAmountWrapper.className = 'set-quantity-wrapper';
-        productQuantity.className = 'product-quantity';
-        productIncreaseButton.className = 'increase-button';
-        productDecreaseButton.className = 'decrease-button';
 
+        const productQuantity = document.createElement('span');
+        productQuantity.className = 'product-quantity';
         productQuantity.innerHTML = this.productQuantity;
+
+        const productIncreaseButton = document.createElement('div');
+        productIncreaseButton.className = 'increase-button';
         productIncreaseButton.innerHTML = '<i class="fas fa-plus-circle"></i>';
+
+        const productDecreaseButton = document.createElement('div');
+        productDecreaseButton.className = 'decrease-button';
         productDecreaseButton.innerHTML = '<i class="fas fa-minus-circle"></i>';
 
         productSetAmountWrapper.append(

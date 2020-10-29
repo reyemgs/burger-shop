@@ -28,7 +28,7 @@ class App {
     events() {
         this.inBasketButton = document.querySelectorAll('.in-basket-button');
         for (let button of this.inBasketButton) {
-            const id = button.getAttribute('id');
+            const id = button.dataset.productCardId;
             button.addEventListener('click', () => {
                 this.sidebar.basket.addProduct(this.getProductItem(id));
             });
