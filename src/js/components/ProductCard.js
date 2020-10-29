@@ -12,26 +12,23 @@ export default class ProductCard {
         this.productQuantity = 1;
     }
 
-    increaseQuantity(productAmount) {
+    increaseQuantity(productQuantity) {
         this.productQuantity = this.productQuantity + 1;
-        productAmount.innerHTML = this.productQuantity;
+        productQuantity.innerHTML = this.productQuantity;
     }
 
-    decreaseQuantity(productAmount) {
+    decreaseQuantity(productQuantity) {
         if (this.productQuantity === 1) return;
         else {
             this.productQuantity = this.productQuantity - 1;
-            productAmount.innerHTML = this.productQuantity;
+            productQuantity.innerHTML = this.productQuantity;
         }
     }
 
     createMarket(response) {
         const productMarket = document.createElement('img');
         productMarket.className = 'product-market';
-        productMarket.setAttribute(
-            'src',
-            `../examples${response.markets[this.market].image}`
-        );
+        productMarket.setAttribute('src', `../examples${response.markets[this.market].image}`);
         return productMarket;
     }
 
@@ -63,43 +60,47 @@ export default class ProductCard {
         return productPrice;
     }
 
-    createSetAmount() {
-        const productSetAmountWrapper = document.createElement('div');
-        const productAmountLabel = document.createElement('span');
-        const productAmount = document.createElement('span');
-        const productIncreaseButton = document.createElement('div');
-        const productDecreaseButton = document.createElement('div');
-        const productInBasketButton = document.createElement('button');
+    createQuantityLabel() {
+        const productQuantityLabel = document.createElement('span');
+        productQuantityLabel.className = 'product-quantity-label';
+        productQuantityLabel.innerHTML = 'Количество';
+        return productQuantityLabel;
+    }
 
-        productSetAmountWrapper.className = 'set-amount-wrapper';
-        productAmountLabel.className = 'product-amount-label';
-        productAmount.className = 'product-amount';
-        productIncreaseButton.className = 'increase-button';
-        productDecreaseButton.className = 'decrease-button';
+    createInBasketButton() {
+        const productInBasketButton = document.createElement('button');
         productInBasketButton.className = 'in-basket-button';
         productInBasketButton.setAttribute('id', this.id);
+        productInBasketButton.innerHTML = 'В КОРЗИНУ';
+        return productInBasketButton;
+    }
 
-        productAmountLabel.innerHTML = 'Количество';
-        productAmount.innerHTML = this.productQuantity;
+    createSetAmountWrapper() {
+        const productSetAmountWrapper = document.createElement('div');
+        const productQuantity = document.createElement('span');
+        const productIncreaseButton = document.createElement('div');
+        const productDecreaseButton = document.createElement('div');
+
+        productSetAmountWrapper.className = 'set-quantity-wrapper';
+        productQuantity.className = 'product-quantity';
+        productIncreaseButton.className = 'increase-button';
+        productDecreaseButton.className = 'decrease-button';
+
+        productQuantity.innerHTML = this.productQuantity;
         productIncreaseButton.innerHTML = '<i class="fas fa-plus-circle"></i>';
         productDecreaseButton.innerHTML = '<i class="fas fa-minus-circle"></i>';
-        productInBasketButton.innerHTML = 'В КОРЗИНУ';
 
         productSetAmountWrapper.append(
-            productAmountLabel,
+            this.createQuantityLabel(),
             productDecreaseButton,
-            productAmount,
+            productQuantity,
             productIncreaseButton,
-            productInBasketButton
+            this.createInBasketButton()
         );
 
-        productIncreaseButton.addEventListener('click', () =>
-            this.increaseQuantity(productAmount)
-        );
+        productIncreaseButton.addEventListener('click', () => this.increaseQuantity(productQuantity));
 
-        productDecreaseButton.addEventListener('click', () =>
-            this.decreaseQuantity(productAmount)
-        );
+        productDecreaseButton.addEventListener('click', () => this.decreaseQuantity(productQuantity));
 
         return productSetAmountWrapper;
     }
@@ -115,7 +116,7 @@ export default class ProductCard {
             this.createName(),
             this.createDescription(),
             this.createPrice(),
-            this.createSetAmount()
+            this.createSetAmountWrapper()
         );
         rightSideWrapper.append(productCardWrapper);
     }

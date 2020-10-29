@@ -2,13 +2,13 @@ export default class ProductCategoryList {
     constructor() {
         this.sideBar = document.querySelector('#sidebar-wrapper');
         this.menuItems = [
-            { id: 1, name: 'Пицца', category: 'pizza' },
-            { id: 2, name: 'Шаурма', category: 'shaurma' },
-            { id: 3, name: 'Сендвичи', category: 'sandwiches' },
-            { id: 4, name: 'Бургеры', category: 'burgers' },
-            { id: 5, name: 'Курица & Картофель', category: 'chicken' },
-            { id: 6, name: 'Тортилья & Салаты', category: 'salads' },
-            { id: 7, name: 'Напитки & Десерты', category: 'drinks' },
+            { name: 'Пицца', category: 'pizza' },
+            { name: 'Шаурма', category: 'shaurma' },
+            { name: 'Сендвичи', category: 'sandwiches' },
+            { name: 'Бургеры', category: 'burgers' },
+            { name: 'Курица & Картофель', category: 'chicken' },
+            { name: 'Тортилья & Салаты', category: 'salads' },
+            { name: 'Напитки & Десерты', category: 'drinks' },
         ];
     }
 

@@ -119,21 +119,29 @@ header .fa-bars {
   margin: auto;
   padding: 5px 15px;
 }
-#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-content {
+#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product {
   font-size: 12px;
   display: block;
   padding: 30px 0px;
   border-bottom: 2px solid #3585aa;
 }
-#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-content .basket-product-name {
+#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-product-name {
   float: left;
   width: 50%;
   text-align: left;
 }
-#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-content .basket-product-quantity {
-  float: right;
-  width: 50%;
+#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-product-quantity {
+  float: left;
+  width: 35%;
   text-align: right;
+}
+#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .remove-button {
+  float: right;
+  height: 18px;
+  color: #6b581a;
+}
+#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .remove-button:hover {
+  color: #fad045;
 }
 #sidebar-wrapper .basket .basket-body .basket-total-price {
   display: block;
@@ -224,17 +232,17 @@ header .fa-bars {
   font-weight: bold;
   color: #aa3535;
 }
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper {
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper {
   width: 200px;
   height: 125px;
   margin: auto;
   text-align: center;
   border-radius: 8px;
 }
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .product-amount-label {
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .product-quantity-label {
   display: block;
 }
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .product-amount {
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .product-quantity {
   display: inline-block;
   background: #ffffff;
   margin: auto;
@@ -243,17 +251,17 @@ header .fa-bars {
   border: 1px solid #999999;
   border-radius: 5px;
 }
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .increase-button,
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .decrease-button {
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .increase-button,
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .decrease-button {
   display: inline-block;
   padding: 10px 20px;
   color: #6b581a;
 }
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .increase-button:hover,
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .decrease-button:hover {
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .increase-button:hover,
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .decrease-button:hover {
   color: #fad045;
 }
-#rightside-wrapper .product-card-wrapper .set-amount-wrapper .in-basket-button {
+#rightside-wrapper .product-card-wrapper .set-quantity-wrapper .in-basket-button {
   display: block;
   margin: 10px auto;
   width: 150px;
