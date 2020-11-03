@@ -4,9 +4,10 @@ $yellow-sidebar: #fff8e2;
 $white: #ffffff;
 $grey-button: #757575;
 $grey-border: #999999;
-$body-background: #f8f8f8;
+$body-background: #ececec;
 $description: #3585aa;
 $price: #aa3535;
+$modal-items: #fa6045;
 
 @mixin border-top-radius {
     border-top-right-radius: 8px;
@@ -291,4 +292,71 @@ header {
             }
         }
     }
+}
+
+.modal-wrapper {
+    z-index: 1000;
+    width: 60%;
+    height: 60%;
+    left: 25%;
+    top: 25%;
+    display: block;
+    position: fixed;
+    background: $body-background;
+    border: 2px solid red;
+    border-radius: 10px;
+
+    .modal-header {
+        height: 50px;
+        background: $yellow;
+        border-radius: 10px;
+    }
+    .items-wrapper {
+        display: block;
+        text-align: center;
+        padding: 20px;
+
+        .modal-menu-item {
+            display: inline;
+            text-align: center;
+            padding: 10px;
+            width: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            color: $yellow-text;
+            background-color: $white;
+            -webkit-user-select: none;
+            &:first-child {
+                border-top-left-radius: 10px;
+                border-bottom-left-radius: 10px;
+            }
+            &:last-child {
+                border-top-right-radius: 10px;
+                border-bottom-right-radius: 10px;
+            }
+            &:hover {
+                background: $modal-items;
+                color: white;
+            }
+        }
+    }
+}
+
+.shadow-modal {
+    position: fixed;
+    border:none;
+    display: block;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 98;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+    background-color: black;
+    pointer-events: auto;
+    opacity: 0.6;
 }

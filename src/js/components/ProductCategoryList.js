@@ -25,6 +25,14 @@ export default class ProductCategoryList {
         this.sideBar.append(menu);
     }
 
+    // pagination(callback, productItems) {
+    //     const items = document.querySelectorAll('.menu-item');
+    //     for (const item of items) {
+    //         const category = item.getAttribute('id');
+    //         const filtered = productItems.filter(item => item.category === category);
+    //     }
+    // }
+
     render() {
         this.createProductCategoryList();
     }

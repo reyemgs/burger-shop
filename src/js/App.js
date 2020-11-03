@@ -1,12 +1,14 @@
 import SideBar from './components/SideBar.js';
 import ProductCard from './components/ProductCard.js';
 import Fetch from './Fetch.js';
+import Modal from './components/Modal.js';
 
 class App {
     constructor() {
         this.productItems = [];
         this.response = null;
         this.sidebar = new SideBar();
+        this.modal = new Modal();
         this.init();
     }
 
@@ -14,7 +16,9 @@ class App {
         (async () => {
             await this.request();
             await this.sidebar.render();
+            await this.modal.createModal();
             await this.renderProductCards();
+            await this.pagination();
             await this.events();
         })();
     }
@@ -42,7 +46,7 @@ class App {
             const productQuantity = button.previousElementSibling;
             button.addEventListener('click', () => {
                 this.getProductItem(id).increaseQuantity(productQuantity);
-                this.sidebar.basket.updateQuantity(this.getProductItem(id));
+                if (!this.sidebar.basket.isAdded(this.getProductItem(id))) return;
                 this.sidebar.basket.updateTotalPrice(this.totalPrice, this.sidebar.basket.addedProducts);
                 this.sidebar.basket.updateProducts();
             });
@@ -53,9 +57,23 @@ class App {
             const productQuantity = button.nextElementSibling;
             button.addEventListener('click', () => {
                 this.getProductItem(id).decreaseQuantity(productQuantity);
-                this.sidebar.basket.updateQuantity(this.getProductItem(id));
+                if (!this.sidebar.basket.isAdded(this.getProductItem(id))) return;
                 this.sidebar.basket.updateTotalPrice(this.totalPrice, this.sidebar.basket.addedProducts);
                 this.sidebar.basket.updateProducts();
+            });
+        }
+    }
+
+    pagination() {
+        const rightSideWrapper = document.querySelector('#rightside-wrapper');
+        const menuItems = document.querySelectorAll('.menu-item');
+        for (const item of menuItems) {
+            const category = item.getAttribute('id');
+            const filtered = this.productItems.filter(item => item.category === category);
+            item.addEventListener('click', () => {
+                rightSideWrapper.innerHTML = '';
+                filtered.map(item => item.createProductCard(this.response));
+                this.events();
             });
         }
     }
