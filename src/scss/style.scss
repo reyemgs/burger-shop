@@ -1,4 +1,6 @@
 $yellow: #fad045;
+$yellow-scrollbar: #ff9900;
+$yellow-card: #ff9900d3;
 $yellow-text: #6b581a;
 $yellow-sidebar: #fff8e2;
 $white: #ffffff;
@@ -51,6 +53,21 @@ header {
         color: $yellow-text;
     }
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 20px;
+    box-shadow: inset 0 0 2.5px 2px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, $yellow, $yellow-scrollbar);
+    border-radius: 10px;
+}
+
 
 /* SIDEBAR */
 #sidebar-wrapper {
@@ -153,7 +170,7 @@ header {
                         height: 18px;
                         color: $yellow-text;
                         &:hover {
-                            color: $yellow;
+                            color: $modal-items;
                         }
                     }
                 }
@@ -182,8 +199,8 @@ header {
                 transition: 0.1s;
                 overflow: hidden;
                 &:hover {
-                    background: $yellow;
-                    color: $yellow-text;
+                    background: $modal-items;
+                    color: $white;
                 }
             }
         }
@@ -193,7 +210,7 @@ header {
 /* RIGHTSIDE */
 #rightside-wrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: row;
@@ -275,7 +292,7 @@ header {
                 padding: 10px 20px;
                 color: $yellow-text;
                 &:hover {
-                    color: $yellow;
+                    color: $modal-items;
                 }
             }
             .in-basket-button {
@@ -295,28 +312,45 @@ header {
 }
 
 .modal-wrapper {
-    z-index: 1000;
-    width: 60%;
-    height: 60%;
-    left: 25%;
-    top: 25%;
-    display: block;
-    position: fixed;
-    background: $body-background;
-    border: 2px solid red;
-    border-radius: 10px;
-
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    margin: auto;
+    &.active {
+        display: block;
+        position: fixed;
+        left: 13%;
+        top: 4%;
+        visibility: visible;
+        opacity: 1;
+        z-index: 1000;
+        width: 75%;
+        opacity: 1;
+        transition: opacity 0.15s ease;
+        background: $body-background;
+        border-radius: 10px;
+    }
     .modal-header {
         height: 50px;
         background: $yellow;
-        border-radius: 10px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 8px;
+            color: $yellow-text;
+            &:hover {
+                color: $modal-items;
+            }
+        }
     }
     .items-wrapper {
         display: block;
         text-align: center;
         padding: 20px;
-
         .modal-menu-item {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
             display: inline;
             text-align: center;
             padding: 10px;
@@ -340,23 +374,80 @@ header {
             }
         }
     }
+
+    .modal-content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        height: 550px;
+        overflow-y: scroll;
+        .ingridient-wrapper {
+            width: 220px;
+            height: 280px;
+            margin: 5px;
+            padding: 5px;
+            &:hover {
+                background: linear-gradient(45deg, $yellow, $yellow-card);
+                border-radius: 10px;
+                .ingridient-image {
+                    border: 8px solid $modal-items;
+                }
+            }
+            .ingridient-image {
+                display: block;
+                margin: auto;
+                border: 8px solid $yellow;
+                border-radius: 100px;
+            }
+            .ingridient-name {
+                display: block;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+                color: $yellow-text;
+                border-bottom: 2px solid $modal-items;
+                padding-bottom: 5px;
+            }
+            .ingridient-price {
+                display: block;
+                text-align: center;
+                padding-top: 5px;
+                color: $price;
+            }
+        }
+    }
+
+    .modal-footer {
+        height: 50px;
+        border-top: 4px solid $yellow;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background: $yellow-sidebar;
+    }
 }
 
 .shadow-modal {
-    position: fixed;
-    border:none;
-    display: block;
-    width: 100%;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 98;
+    visibility: hidden;
     opacity: 0;
-    transition: opacity 0.15s ease;
-    background-color: black;
-    pointer-events: auto;
-    opacity: 0.6;
+    &.active {
+        visibility: visible;
+        position: fixed;
+        border:none;
+        display: block;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 98;
+        opacity: 0;
+        transition: opacity 0.15s ease;
+        background-color: black;
+        pointer-events: auto;
+        opacity: 0.6;
+    }
 }

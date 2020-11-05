@@ -9,6 +9,7 @@ export default class ProductCard {
         this.category = item.category;
         this.type = item.type;
         this.weight = item.weight;
+        this.components = item.components;
         this.productQuantity = 1;
     }
 
@@ -100,10 +101,6 @@ export default class ProductCard {
             productIncreaseButton,
             this.createInBasketButton()
         );
-
-        // productIncreaseButton.addEventListener('click', () => this.increaseQuantity(productQuantity));
-
-        // productDecreaseButton.addEventListener('click', () => this.decreaseQuantity(productQuantity));
 
         return productSetAmountWrapper;
     }

@@ -2,13 +2,17 @@ import SideBar from './components/SideBar.js';
 import ProductCard from './components/ProductCard.js';
 import Fetch from './Fetch.js';
 import Modal from './components/Modal.js';
+import IngridientCard from './components/IngridientCard.js';
 
 class App {
     constructor() {
         this.productItems = [];
+        this.ingridientCards = [];
+        this.ingridientItems = {};
         this.response = null;
         this.sidebar = new SideBar();
         this.modal = new Modal();
+
         this.init();
     }
 
@@ -17,7 +21,8 @@ class App {
             await this.request();
             await this.sidebar.render();
             await this.modal.createModal();
-            await this.renderProductCards();
+            await this.createProductCards();
+            await this.createIngridientCards();
             await this.pagination();
             await this.events();
         })();
@@ -34,13 +39,20 @@ class App {
         this.increaseButton = document.querySelectorAll('.increase-button');
         this.decreaseButton = document.querySelectorAll('.decrease-button');
         this.totalPrice = document.querySelector('.basket-total-price');
+
+        // IN BASKET BUTTON
         for (let button of this.inBasketButton) {
             const id = button.dataset.productCardId;
             button.addEventListener('click', () => {
+                if (this.getProductItem(id).type === 'multiple') {
+                    this.modal.open(this.getProductItem(id));
+                    return;
+                }
                 this.sidebar.basket.addProduct(this.getProductItem(id));
             });
         }
 
+        // INCREASE QUANTITY
         for (let button of this.increaseButton) {
             const id = button.getAttribute('data-increase-id');
             const productQuantity = button.previousElementSibling;
@@ -52,6 +64,7 @@ class App {
             });
         }
 
+        // DECREASE QUANTITY
         for (let button of this.decreaseButton) {
             const id = button.getAttribute('data-decrease-id');
             const productQuantity = button.nextElementSibling;
@@ -78,11 +91,7 @@ class App {
         }
     }
 
-    getProductItem(id) {
-        return this.productItems.find(productCard => productCard.id == id);
-    }
-
-    renderProductCards() {
+    createProductCards() {
         let id = 1;
         for (let item of this.response.menu) {
             item.id = id++;
@@ -90,6 +99,33 @@ class App {
             this.productItems.push(productCard);
             productCard.createProductCard(this.response);
         }
+    }
+
+    createIngridientCards() {
+        let id = 1;
+        for (let key in this.response) {
+            if (key === 'menu' || key === 'version' || key == 'markets') continue;
+            this.ingridientItems[key] = this.response[key];
+            for (let prop in this.ingridientItems[key]) {
+                this.ingridientItems[key][prop].id = id++;
+                this.ingridientItems[key][prop].category = key;
+                const ingridient = new IngridientCard(this.ingridientItems[key][prop]);
+                this.ingridientCards.push(ingridient);
+            }
+        }
+        this.ingridientCards[0].createIngridientCard();
+        this.ingridientCards[1].createIngridientCard();
+        this.ingridientCards[2].createIngridientCard();
+        this.ingridientCards[0].createIngridientCard();
+        this.ingridientCards[1].createIngridientCard();
+        this.ingridientCards[2].createIngridientCard();
+        this.ingridientCards[0].createIngridientCard();
+        this.ingridientCards[1].createIngridientCard();
+        this.ingridientCards[2].createIngridientCard();
+    }
+
+    getProductItem(id) {
+        return this.productItems.find(productCard => productCard.id == id);
     }
 }
 
