@@ -8,9 +8,19 @@ export default class IngridientCard {
         this.category = item.category;
     }
 
+    active(id) {
+        const ingridients = document.querySelectorAll('.ingridient-wrapper');
+        for (const item of ingridients) {
+            if (item.getAttribute('data-ingridient-id') == id) {
+                item.classList.toggle('active');
+            }
+        }
+    }
+
     createCardWrapper() {
         const wrapper = document.createElement('div');
         wrapper.className = 'ingridient-wrapper';
+        wrapper.setAttribute('data-ingridient-id', this.id);
         return wrapper;
     }
 
