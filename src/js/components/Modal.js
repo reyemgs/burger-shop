@@ -110,6 +110,46 @@ export default class Modal {
         return content;
     }
 
+    createDonePage(product, data) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'done-wrapper';
+
+        const header = document.createElement('span');
+        header.className = 'done-header';
+        header.innerHTML = 'Ваш сендвич готов!';
+
+        const info = document.createElement('div');
+        info.className = 'done-info';
+
+        const size = document.createElement('span');
+        size.className = 'done-size';
+        size.innerHTML = `Размер: ${data.sizes[product.components.size].name}`;
+
+        const bread = document.createElement('span');
+        bread.className = 'done-bread';
+        bread.innerHTML = `Хлеб: ${data.breads[product.components.bread].name}`;
+
+        const vegetables = document.createElement('span');
+        vegetables.className = 'done-vegetables';
+        vegetables.innerHTML = `Овощи: ${product.components.vegetable}`;
+
+        const sauces = document.createElement('span');
+        sauces.className = 'done-sauces';
+        sauces.innerHTML = `Соусы: ${product.components.sauce}`;
+
+        const fillings = document.createElement('span');
+        fillings.className = 'done-fillings';
+        fillings.innerHTML = `Начинка: ${product.components.filling}`;
+
+        const name = document.createElement('span');
+        name.className = 'done-name';
+        name.innerHTML = `${product.name}`;
+
+        info.append(size, bread, vegetables, sauces, fillings);
+        wrapper.append(header, info, name);
+        return wrapper;
+    }
+
     createCloseButton() {
         const closeButton = document.createElement('div');
         closeButton.className = 'close-modal';

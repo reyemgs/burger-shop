@@ -11,8 +11,8 @@
       "type": "multiple",
       "weight": 1,
       "components": {
-        "size": {},
-        "bread": "whit-italian",
+        "size": "1x",
+        "bread": "white-italian",
         "vegetable": [],
         "sauce": [],
         "filling": []
@@ -231,7 +231,13 @@
       "market": "subway",
       "type": "multiple",
       "weight": 1,
-      "components": {}
+      "components": {
+        "size": "1x",
+        "bread": "oregano-parmesan",
+        "vegetable": [],
+        "sauce": [],
+        "filling": []
+      }
     },
     {
       "name": "Доп сыр (в бургер)",

@@ -47,7 +47,7 @@ class App {
     }
 
     events() {
-        this.inBasketButton = document.querySelectorAll('.in-basket-button');
+        this.inBasketButton = document.querySelectorAll('.in-basket-button'); // TODO исправить на const
         this.increaseButton = document.querySelectorAll('.increase-button');
         this.decreaseButton = document.querySelectorAll('.decrease-button');
         this.totalPrice = document.querySelector('.basket-total-price');
@@ -125,21 +125,49 @@ class App {
     }
 
     modalPaginationEvents() {
-        this.prevButton = document.querySelector('.previous-button');
-        this.nextButton = document.querySelector('.next-button');
-        this.modalContent = document.querySelector('.modal-content');
+        const prevButton = document.querySelector('.previous-button');
+        const nextButton = document.querySelector('.next-button');
+        const modalContent = document.querySelector('.modal-content');
+        const modalFooter = document.querySelector('.modal-footer');
 
-        this.nextButton.addEventListener('click', () => {
+        nextButton.addEventListener('click', () => {
+            const id = this.modal.currentProduct.id;
+
             if (this.modal.currentPage === this.modal.menuItems.length) return;
-            this.modalContent.innerHTML = '';
+
+            modalContent.innerHTML = '';
+            modalFooter.innerHTML = '';
+
             this.modal.nextPage();
+            if (this.modal.currentPage === 6) {
+                modalContent.append(
+                    this.modal.currentProduct.createImage(),
+                    this.modal.createDonePage(this.modal.currentProduct, this.response)
+                );
+
+                const button = document.querySelector(`button[data-product-card-id="${id}"]`);
+                const cloneButton = document.importNode(button, true); // TODO удалить клон
+
+                cloneButton.addEventListener('click', () =>
+                    this.sidebar.basket.addProduct(this.getProductItem(id))
+                ); // TODO пофиксить добавление в корзину
+
+                modalFooter.append(cloneButton);
+                return;
+            }
+
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
             this.ingridientChoiceEvent();
         });
 
-        this.prevButton.addEventListener('click', () => {
+        prevButton.addEventListener('click', () => {
+            const modalFooter = document.querySelector('.modal-footer');
+
             if (this.modal.currentPage === 1) return;
+
             this.modalContent.innerHTML = '';
+            modalFooter.innerHTML = '';
+
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
             this.ingridientChoiceEvent();
