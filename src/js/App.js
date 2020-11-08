@@ -9,16 +9,17 @@ class App {
     constructor() {
         this.response = null;
         this.currentCategory = null;
+        this.currentPage = null;
 
         this.productItems = [];
         this.ingridientCards = [];
         this.ingridientItems = {};
         this.components = {
-            size: '',
-            bread: '',
-            vegetable: [],
-            sauce: [],
-            filling: [],
+            sizes: '',
+            breads: '',
+            vegetables: [],
+            sauces: [],
+            fillings: [],
         };
 
         this.sidebar = new SideBar();
@@ -47,21 +48,25 @@ class App {
     }
 
     events() {
-        this.inBasketButton = document.querySelectorAll('.in-basket-button'); // TODO исправить на const
-        this.increaseButton = document.querySelectorAll('.increase-button');
-        this.decreaseButton = document.querySelectorAll('.decrease-button');
-        this.totalPrice = document.querySelector('.basket-total-price');
-        this.modalContent = document.querySelector('.modal-content');
+        const inBasketButton = document.querySelectorAll('.in-basket-button');
+        const increaseButton = document.querySelectorAll('.increase-button');
+        const decreaseButton = document.querySelectorAll('.decrease-button');
+        const totalPrice = document.querySelector('.basket-total-price');
+        const modalContent = document.querySelector('.modal-content');
 
         // IN BASKET BUTTON
-        for (const button of this.inBasketButton) {
+        for (const button of inBasketButton) {
             const id = button.dataset.productCardId;
 
             button.addEventListener('click', () => {
-                if (this.getProductItem(id).type === 'multiple') {
-                    this.modalContent.innerHTML = '';
-                    this.modal.open(this.getProductItem(id));
-                    this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
+                let product = this.getProductItem(id);
+                let currentPage = this.modal.currentPage;
+                let ingridientCategory = this.modal.getCategoryItem(currentPage);
+
+                if (product.type === 'multiple') {
+                    modalContent.innerHTML = '';
+                    this.modal.open(product);
+                    this.renderIngridientCards(ingridientCategory);
                     this.ingridientChoiceEvent();
                     return;
                 }
@@ -70,27 +75,33 @@ class App {
         }
 
         // INCREASE QUANTITY
-        for (const button of this.increaseButton) {
+        for (const button of increaseButton) {
             const id = button.getAttribute('data-increase-id');
             const productQuantity = button.previousElementSibling;
 
             button.addEventListener('click', () => {
-                this.getProductItem(id).increaseQuantity(productQuantity);
-                if (!this.sidebar.basket.isAdded(this.getProductItem(id))) return;
-                this.sidebar.basket.updateTotalPrice(this.totalPrice, this.sidebar.basket.addedProducts);
+                const product = this.getProductItem(id);
+                let addedProducts = this.sidebar.basket.addedProducts;
+
+                product.increaseQuantity(productQuantity);
+                if (!this.sidebar.basket.isAdded(product)) return;
+                this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
                 this.sidebar.basket.updateProducts();
             });
         }
 
         // DECREASE QUANTITY
-        for (const button of this.decreaseButton) {
+        for (const button of decreaseButton) {
             const id = button.getAttribute('data-decrease-id');
             const productQuantity = button.nextElementSibling;
 
             button.addEventListener('click', () => {
-                this.getProductItem(id).decreaseQuantity(productQuantity);
-                if (!this.sidebar.basket.isAdded(this.getProductItem(id))) return;
-                this.sidebar.basket.updateTotalPrice(this.totalPrice, this.sidebar.basket.addedProducts);
+                const product = this.getProductItem(id);
+                let addedProducts = this.sidebar.basket.addedProducts;
+
+                product.decreaseQuantity(productQuantity);
+                if (!this.sidebar.basket.isAdded(product)) return;
+                this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
                 this.sidebar.basket.updateProducts();
             });
         }
@@ -113,13 +124,26 @@ class App {
             });
         }
     }
-
-    ingridientChoiceEvent() {
-        this.ingridients = document.querySelectorAll('.ingridient-wrapper');
-        for (const ingridient of this.ingridients) {
+    // TODO
+    ingridientChoiceEvent(product) {
+        const ingridients = document.querySelectorAll('.ingridient-wrapper');
+        for (const ingridient of ingridients) {
             const id = ingridient.getAttribute('data-ingridient-id');
             ingridient.addEventListener('click', () => {
-                this.getIngridientItem(id).active(id);
+                const item = this.getIngridientItem(id);
+
+                if (item.category == 'sizes' || item.category == 'breads') {
+                    this.components[item.category] = item.key;
+                    item.active(id);
+                } else if (
+                    item.category == 'vegetables' ||
+                    item.category == 'sauces' ||
+                    item.category == 'fillings'
+                ) {
+                    this.components[item.category].push(item.key);
+                }
+                // console.log(item);
+                console.log(this.components);
             });
         }
     }
@@ -132,6 +156,7 @@ class App {
 
         nextButton.addEventListener('click', () => {
             const id = this.modal.currentProduct.id;
+            const product = this.modal.currentProduct;
 
             if (this.modal.currentPage === this.modal.menuItems.length) return;
 
@@ -146,11 +171,9 @@ class App {
                 );
 
                 const button = document.querySelector(`button[data-product-card-id="${id}"]`);
-                const cloneButton = document.importNode(button, true); // TODO удалить клон
+                const cloneButton = document.importNode(button, true);
 
-                cloneButton.addEventListener('click', () =>
-                    this.sidebar.basket.addProduct(this.getProductItem(id))
-                ); // TODO пофиксить добавление в корзину
+                cloneButton.addEventListener('click', () => this.sidebar.basket.addProduct(product));
 
                 modalFooter.append(cloneButton);
                 return;
@@ -165,7 +188,7 @@ class App {
 
             if (this.modal.currentPage === 1) return;
 
-            this.modalContent.innerHTML = '';
+            modalContent.innerHTML = '';
             modalFooter.innerHTML = '';
 
             this.modal.previousPage();
@@ -190,6 +213,7 @@ class App {
             this.ingridientItems[key] = this.response[key];
             for (let prop in this.ingridientItems[key]) {
                 this.ingridientItems[key][prop].id = id++;
+                this.ingridientItems[key][prop].key = prop;
                 this.ingridientItems[key][prop].category = key;
                 const ingridient = new IngridientCard(this.ingridientItems[key][prop]);
                 this.ingridientCards.push(ingridient);
@@ -205,10 +229,10 @@ class App {
     }
 
     bootCategoryList(current) {
-        this.currentCategory = current;
-
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         rightSideWrapper.innerHTML = '';
+
+        this.currentCategory = current;
 
         const items = this.productItems.filter(item => item.category === this.currentCategory);
         items.map(item => item.createProductCard(this.response));

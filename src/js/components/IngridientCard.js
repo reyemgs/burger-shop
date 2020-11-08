@@ -1,6 +1,7 @@
 export default class IngridientCard {
     constructor(item) {
         this.id = item.id;
+        this.key = item.key;
         this.name = item.name;
         this.price = item.price;
         this.image = item.image;
@@ -15,6 +16,7 @@ export default class IngridientCard {
                 item.classList.toggle('active');
             }
         }
+        return true;
     }
 
     createCardWrapper() {
