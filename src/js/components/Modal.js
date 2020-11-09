@@ -68,7 +68,6 @@ export default class Modal {
         const title = document.querySelector('.modal-title');
         title.innerHTML = this.getMenuItem(this.currentPage).title;
         this.active(this.getCategoryItem(this.currentPage));
-        console.log(this.currentPage, this.getCategoryItem(this.currentPage));
     }
 
     previousPage() {
@@ -76,7 +75,6 @@ export default class Modal {
         const title = document.querySelector('.modal-title');
         title.innerHTML = this.getMenuItem(this.currentPage).title;
         this.active(this.getCategoryItem(this.currentPage));
-        console.log(this.currentPage, this.getCategoryItem(this.currentPage));
     }
 
     active(category) {
@@ -98,6 +96,19 @@ export default class Modal {
         return result.category;
     }
 
+    getIngridientName(data, ingridients, category) {
+        const ingridientsName = [];
+
+        for (const item of ingridients) {
+            ingridientsName.push(data[category][item].name);
+        }
+
+        if (ingridientsName.length === 0) {
+            return 'Нет';
+        }
+        return ingridientsName.join(', ');
+    }
+
     createWrapper() {
         const wrapper = document.createElement('div');
         wrapper.classList.add('modal-wrapper');
@@ -111,6 +122,10 @@ export default class Modal {
     }
 
     createDonePage(product, data) {
+        const productVegetable = product.components.vegetable;
+        const productSauce = product.components.sauce;
+        const productFilling = product.components.filling;
+
         const wrapper = document.createElement('div');
         wrapper.className = 'done-wrapper';
 
@@ -131,15 +146,16 @@ export default class Modal {
 
         const vegetables = document.createElement('span');
         vegetables.className = 'done-vegetables';
-        vegetables.innerHTML = `Овощи: ${product.components.vegetable}`;
+        // vegetables.innerHTML = `Овощи: ${data.vegetables[product.components.vegetable]}`;
+        vegetables.innerHTML = `Овощи: ${this.getIngridientName(data, productVegetable, 'vegetables')}`;
 
         const sauces = document.createElement('span');
         sauces.className = 'done-sauces';
-        sauces.innerHTML = `Соусы: ${product.components.sauce}`;
+        sauces.innerHTML = `Соусы: ${this.getIngridientName(data, productSauce, 'sauces')}`;
 
         const fillings = document.createElement('span');
         fillings.className = 'done-fillings';
-        fillings.innerHTML = `Начинка: ${product.components.filling}`;
+        fillings.innerHTML = `Начинка: ${this.getIngridientName(data, productFilling, 'fillings')}`;
 
         const name = document.createElement('span');
         name.className = 'done-name';

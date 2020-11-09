@@ -7,16 +7,33 @@ export default class IngridientCard {
         this.image = item.image;
         this.description = item.description;
         this.category = item.category;
+        this.selected = false;
     }
 
     active(id) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
+        if (this.category == 'sizes' || this.category == 'breads') {
+            this.activeSingle(ingridients, id);
+        } else {
+            this.activeMultiple(ingridients, id);
+        }
+    }
+
+    activeSingle(ingridients, id) {
+        for (const item of ingridients) {
+            item.classList.remove('active');
+            if (item.getAttribute('data-ingridient-id') == id) {
+                item.classList.add('active');
+            }
+        }
+    }
+
+    activeMultiple(ingridients, id) {
         for (const item of ingridients) {
             if (item.getAttribute('data-ingridient-id') == id) {
                 item.classList.toggle('active');
             }
         }
-        return true;
     }
 
     createCardWrapper() {
@@ -52,5 +69,8 @@ export default class IngridientCard {
         const wrapper = this.createCardWrapper();
         wrapper.append(this.createImage(), this.createName(), this.createPrice());
         content.append(wrapper);
+        if (this.selected) {
+            this.active(this.id);
+        }
     }
 }

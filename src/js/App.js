@@ -14,9 +14,10 @@ class App {
         this.productItems = [];
         this.ingridientCards = [];
         this.ingridientItems = {};
+
         this.components = {
-            sizes: '',
-            breads: '',
+            sizes: '1x',
+            breads: 'white-italian',
             vegetables: [],
             sauces: [],
             fillings: [],
@@ -53,6 +54,7 @@ class App {
         const decreaseButton = document.querySelectorAll('.decrease-button');
         const totalPrice = document.querySelector('.basket-total-price');
         const modalContent = document.querySelector('.modal-content');
+        const closeModalButton = document.querySelector('.close-modal');
 
         // IN BASKET BUTTON
         for (const button of inBasketButton) {
@@ -67,43 +69,53 @@ class App {
                     modalContent.innerHTML = '';
                     this.modal.open(product);
                     this.renderIngridientCards(ingridientCategory);
-                    this.ingridientChoiceEvent();
+                    this.ingridientChoiceEvent(product);
                     return;
                 }
                 this.sidebar.basket.addProduct(this.getProductItem(id));
             });
-        }
 
-        // INCREASE QUANTITY
-        for (const button of increaseButton) {
-            const id = button.getAttribute('data-increase-id');
-            const productQuantity = button.previousElementSibling;
+            // MODAL CLOSE
+            // closeModalButton.addEventListener('click', () => {
+            //     this.modal.close();
+            //     this.modal.currentProduct.components.size = '1x';
+            //     this.modal.currentProduct.components.bread = 'white-itallian';
+            //     this.modal.currentProduct.components.vegetable = [];
+            //     this.modal.currentProduct.components.sauce = [];
+            //     this.modal.currentProduct.components.filling = [];
+            // });
 
-            button.addEventListener('click', () => {
-                const product = this.getProductItem(id);
-                let addedProducts = this.sidebar.basket.addedProducts;
+            // INCREASE QUANTITY
+            for (const button of increaseButton) {
+                const id = button.getAttribute('data-increase-id');
+                const productQuantity = button.previousElementSibling;
 
-                product.increaseQuantity(productQuantity);
-                if (!this.sidebar.basket.isAdded(product)) return;
-                this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
-                this.sidebar.basket.updateProducts();
-            });
-        }
+                button.addEventListener('click', () => {
+                    const product = this.getProductItem(id);
+                    let addedProducts = this.sidebar.basket.addedProducts;
 
-        // DECREASE QUANTITY
-        for (const button of decreaseButton) {
-            const id = button.getAttribute('data-decrease-id');
-            const productQuantity = button.nextElementSibling;
+                    product.increaseQuantity(productQuantity);
+                    if (!this.sidebar.basket.isAdded(product)) return;
+                    this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
+                    this.sidebar.basket.updateProducts();
+                });
+            }
 
-            button.addEventListener('click', () => {
-                const product = this.getProductItem(id);
-                let addedProducts = this.sidebar.basket.addedProducts;
+            // DECREASE QUANTITY
+            for (const button of decreaseButton) {
+                const id = button.getAttribute('data-decrease-id');
+                const productQuantity = button.nextElementSibling;
 
-                product.decreaseQuantity(productQuantity);
-                if (!this.sidebar.basket.isAdded(product)) return;
-                this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
-                this.sidebar.basket.updateProducts();
-            });
+                button.addEventListener('click', () => {
+                    const product = this.getProductItem(id);
+                    let addedProducts = this.sidebar.basket.addedProducts;
+
+                    product.decreaseQuantity(productQuantity);
+                    if (!this.sidebar.basket.isAdded(product)) return;
+                    this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
+                    this.sidebar.basket.updateProducts();
+                });
+            }
         }
     }
 
@@ -124,26 +136,48 @@ class App {
             });
         }
     }
-    // TODO
+
+    // TODO !!! очистка модалки от выделения и очистка всех ингридиентов !!!
     ingridientChoiceEvent(product) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
+
         for (const ingridient of ingridients) {
             const id = ingridient.getAttribute('data-ingridient-id');
+
             ingridient.addEventListener('click', () => {
                 const item = this.getIngridientItem(id);
 
                 if (item.category == 'sizes' || item.category == 'breads') {
                     this.components[item.category] = item.key;
+                    product.components[item.category.slice(0, -1)] = this.components[item.category];
+
+                    item.selected = true;
+                    this.deleteSingleIngridient(id, item.category);
+
                     item.active(id);
                 } else if (
                     item.category == 'vegetables' ||
                     item.category == 'sauces' ||
                     item.category == 'fillings'
                 ) {
+                    if (this.components[item.category].includes(item.key) || item.selected) {
+                        this.deleteMultipleIngridient(
+                            product.components[item.category.slice(0, -1)],
+                            item.key
+                        );
+                        item.selected = false;
+                        item.active(id);
+                        return;
+                    }
+
                     this.components[item.category].push(item.key);
+                    product.components[item.category.slice(0, -1)] = this.components[item.category];
+
+                    item.selected = true;
+                    item.active(id);
+                } else if (this.modal.currentPage === 6) {
+                    product.components[item.category.slice(0, -1)] = this.components[item.category];
                 }
-                // console.log(item);
-                console.log(this.components);
             });
         }
     }
@@ -180,11 +214,12 @@ class App {
             }
 
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.ingridientChoiceEvent();
+            this.ingridientChoiceEvent(product);
         });
 
         prevButton.addEventListener('click', () => {
             const modalFooter = document.querySelector('.modal-footer');
+            const product = this.modal.currentProduct;
 
             if (this.modal.currentPage === 1) return;
 
@@ -193,7 +228,7 @@ class App {
 
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.ingridientChoiceEvent();
+            this.ingridientChoiceEvent(product);
         });
     }
 
@@ -215,6 +250,7 @@ class App {
                 this.ingridientItems[key][prop].id = id++;
                 this.ingridientItems[key][prop].key = prop;
                 this.ingridientItems[key][prop].category = key;
+
                 const ingridient = new IngridientCard(this.ingridientItems[key][prop]);
                 this.ingridientCards.push(ingridient);
             }
@@ -245,6 +281,21 @@ class App {
 
     getIngridientItem(id) {
         return this.ingridientCards.find(ingridientCard => ingridientCard.id == id);
+    }
+
+    deleteSingleIngridient(id, category) {
+        let filtered = this.ingridientCards.filter(item => item.category == category);
+        for (let item of filtered) {
+            if (item.id != id) {
+                item.selected = false;
+            }
+        }
+        console.log(filtered);
+    }
+
+    deleteMultipleIngridient(ingridients, category) {
+        const index = ingridients.findIndex(item => item == category);
+        ingridients.splice(index, 1);
     }
 }
 

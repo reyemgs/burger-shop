@@ -298,6 +298,7 @@ header .fa-bars {
   visibility: hidden;
   opacity: 0;
   margin: auto;
+  -webkit-user-select: none;
 }
 .modal-wrapper.active {
   display: block;
@@ -424,8 +425,15 @@ header .fa-bars {
 .modal-wrapper .modal-content .ingridient-wrapper.active .ingridient-image {
   border: 8px solid #fa6045;
 }
-.modal-wrapper .modal-content .ingridient-wrapper:hover {
+.modal-wrapper .modal-content .ingridient-wrapper.active:hover {
   background: linear-gradient(45deg, #fad045, #ff9900d3);
+  border-radius: 10px;
+}
+.modal-wrapper .modal-content .ingridient-wrapper.active:hover .ingridient-image {
+  border: 8px solid #fa6045;
+}
+.modal-wrapper .modal-content .ingridient-wrapper:hover {
+  background: #fff8e2;
   border-radius: 10px;
 }
 .modal-wrapper .modal-content .ingridient-wrapper:hover .ingridient-image {

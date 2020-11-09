@@ -335,6 +335,7 @@ header {
     visibility: hidden;
     opacity: 0;
     margin: auto;
+    -webkit-user-select: none;
     &.active {
         display: block;
         position: fixed;
@@ -436,9 +437,16 @@ header {
                 .ingridient-image {
                     border: 8px solid $modal-items;
                 }
+                &:hover {
+                    background: linear-gradient(45deg, $yellow, $yellow-card);
+                    border-radius: 10px;
+                    .ingridient-image {
+                        border: 8px solid $modal-items;
+                    }
+                }
             }
             &:hover {
-                background: linear-gradient(45deg, $yellow, $yellow-card);
+                background: $yellow-sidebar;
                 border-radius: 10px;
                 .ingridient-image {
                     border: 8px solid $modal-items;
