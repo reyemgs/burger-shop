@@ -83,7 +83,6 @@ class App {
                     this.selectIngridientEvent(product);
                     // this.ingridientChoiceEvent(product);
                     // this.clearModalData(product);
-                    console.log(product);
                     return;
                 }
                 this.sidebar.basket.addProduct(this.getProductItem(id));
@@ -93,9 +92,7 @@ class App {
         // CLOSE MODAL
         closeModal.addEventListener('click', () => {
             this.modal.close();
-            console.log(this.modal.currentProduct);
             this.clearModalData(this.modal.currentProduct);
-            console.log(this.modal.currentProduct);
         });
 
         // INCREASE QUANTITY
@@ -143,15 +140,14 @@ class App {
 
                 if (!Array.isArray(product.components[ingridientCategory])) {
                     if (ingridientItem.selected) return;
-
-                    this.setSelectedFalse();
+                    this.setSelectedSingleFalse();
 
                     product.components[ingridientCategory] = ingridientItem.key;
+                    product.price += ingridientItem.price;
                     ingridientItem.selected = true;
                     ingridientItem.active(id);
 
-                    console.log('product components', product.components);
-                    console.log('is not array', true);
+                    console.log('product price', product.price);
                 } else {
                     console.log(false);
                 }
@@ -159,9 +155,8 @@ class App {
         }
     }
 
-    setSelectedFalse() {
-        const ingridients = document.querySelectorAll('.ingridient-wrapper');
-        for (const item of ingridients) {
+    setSelectedSingleFalse() {
+        for (const item of this.ingridientCards) {
             item.selected = false;
         }
     }
@@ -338,8 +333,6 @@ class App {
         let sourceProduct = this.response.menu.find(item => item.name == product.name);
         product.price = sourceProduct.price;
         for (let item in product.components) {
-            console.log('product', product.components[item]);
-            console.log('standard', this.standardComponents[item]);
             product.components[item] = this.standardComponents[item];
         }
         this.components = {
