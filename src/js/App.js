@@ -146,24 +146,6 @@ class App {
         }
     }
 
-    productCategoryEvents() {
-        const rightSideWrapper = document.querySelector('#rightside-wrapper');
-        const menuItems = document.querySelectorAll('.menu-item');
-
-        for (const item of menuItems) {
-            const category = item.getAttribute('id');
-            const filtered = this.productItems.filter(item => item.category === category);
-
-            item.addEventListener('click', () => {
-                this.currentCategory = category;
-                this.categoryList.active(this.currentCategory);
-                rightSideWrapper.innerHTML = '';
-                filtered.map(item => item.createProductCard(this.response));
-                this.events();
-            });
-        }
-    }
-
     // TODO !!! очистка модалки от выделения и очистка всех ингридиентов !!!
     // ingridientChoiceEvent(product) {
     //     const ingridients = document.querySelectorAll('.ingridient-wrapper');
@@ -280,6 +262,24 @@ class App {
             this.selectIngridientEvent();
             // this.ingridientChoiceEvent(product);
         });
+    }
+
+    productCategoryEvents() {
+        const rightSideWrapper = document.querySelector('#rightside-wrapper');
+        const menuItems = document.querySelectorAll('.menu-item');
+
+        for (const item of menuItems) {
+            const category = item.getAttribute('id');
+            const filtered = this.productItems.filter(item => item.category === category);
+
+            item.addEventListener('click', () => {
+                this.currentCategory = category;
+                this.categoryList.active(this.currentCategory);
+                rightSideWrapper.innerHTML = '';
+                filtered.map(item => item.createProductCard(this.response));
+                this.events();
+            });
+        }
     }
 
     addInBasketModal(product) {
