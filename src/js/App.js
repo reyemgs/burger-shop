@@ -23,6 +23,14 @@ class App {
             fillings: [],
         };
 
+        this.standardComponents = {
+            size: '1x',
+            bread: 'white-italian',
+            vegetable: [],
+            sauce: [],
+            filling: [],
+        };
+
         this.sidebar = new SideBar();
         this.modal = new Modal();
         this.categoryList = new ProductCategoryList();
@@ -54,7 +62,7 @@ class App {
         const decreaseButton = document.querySelectorAll('.decrease-button');
         const totalPrice = document.querySelector('.basket-total-price');
         const modalContent = document.querySelector('.modal-content');
-        const closeModalButton = document.querySelector('.close-modal');
+        const closeModal = document.querySelector('.close-modal');
 
         // IN BASKET BUTTON
         for (const button of inBasketButton) {
@@ -68,54 +76,55 @@ class App {
                 if (product.type === 'multiple') {
                     modalContent.innerHTML = '';
                     this.modal.open(product);
+                    this.firstRenderIngridientsCards();
                     this.renderIngridientCards(ingridientCategory);
                     this.ingridientChoiceEvent(product);
+                    this.clearModalData(product);
+                    console.log(product);
                     return;
                 }
                 this.sidebar.basket.addProduct(this.getProductItem(id));
             });
+        }
 
-            // MODAL CLOSE
-            // closeModalButton.addEventListener('click', () => {
-            //     this.modal.close();
-            //     this.modal.currentProduct.components.size = '1x';
-            //     this.modal.currentProduct.components.bread = 'white-itallian';
-            //     this.modal.currentProduct.components.vegetable = [];
-            //     this.modal.currentProduct.components.sauce = [];
-            //     this.modal.currentProduct.components.filling = [];
-            // });
+        // CLOSE MODAL
+        closeModal.addEventListener('click', () => {
+            this.modal.close();
+            console.log(this.modal.currentProduct);
+            this.clearModalData(this.modal.currentProduct);
+            console.log(this.modal.currentProduct);
+        });
 
-            // INCREASE QUANTITY
-            for (const button of increaseButton) {
-                const id = button.getAttribute('data-increase-id');
-                const productQuantity = button.previousElementSibling;
+        // INCREASE QUANTITY
+        for (const button of increaseButton) {
+            const id = button.getAttribute('data-increase-id');
+            const productQuantity = button.previousElementSibling;
 
-                button.addEventListener('click', () => {
-                    const product = this.getProductItem(id);
-                    let addedProducts = this.sidebar.basket.addedProducts;
+            button.addEventListener('click', () => {
+                const product = this.getProductItem(id);
+                let addedProducts = this.sidebar.basket.addedProducts;
 
-                    product.increaseQuantity(productQuantity);
-                    if (!this.sidebar.basket.isAdded(product)) return;
-                    this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
-                    this.sidebar.basket.updateProducts();
-                });
-            }
+                product.increaseQuantity(productQuantity);
+                if (!this.sidebar.basket.isAdded(product)) return;
+                this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
+                this.sidebar.basket.updateProducts();
+            });
+        }
 
-            // DECREASE QUANTITY
-            for (const button of decreaseButton) {
-                const id = button.getAttribute('data-decrease-id');
-                const productQuantity = button.nextElementSibling;
+        // DECREASE QUANTITY
+        for (const button of decreaseButton) {
+            const id = button.getAttribute('data-decrease-id');
+            const productQuantity = button.nextElementSibling;
 
-                button.addEventListener('click', () => {
-                    const product = this.getProductItem(id);
-                    let addedProducts = this.sidebar.basket.addedProducts;
+            button.addEventListener('click', () => {
+                const product = this.getProductItem(id);
+                let addedProducts = this.sidebar.basket.addedProducts;
 
-                    product.decreaseQuantity(productQuantity);
-                    if (!this.sidebar.basket.isAdded(product)) return;
-                    this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
-                    this.sidebar.basket.updateProducts();
-                });
-            }
+                product.decreaseQuantity(productQuantity);
+                if (!this.sidebar.basket.isAdded(product)) return;
+                this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
+                this.sidebar.basket.updateProducts();
+            });
         }
     }
 
@@ -140,41 +149,27 @@ class App {
     // TODO !!! очистка модалки от выделения и очистка всех ингридиентов !!!
     ingridientChoiceEvent(product) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
+        const basketTotalPrice = document.querySelector('.basket-total-price');
 
         for (const ingridient of ingridients) {
             const id = ingridient.getAttribute('data-ingridient-id');
 
             ingridient.addEventListener('click', () => {
                 const item = this.getIngridientItem(id);
-
                 if (item.category == 'sizes' || item.category == 'breads') {
-                    this.components[item.category] = item.key;
-                    product.components[item.category.slice(0, -1)] = this.components[item.category];
-
-                    item.selected = true;
-                    this.deleteSingleIngridient(id, item.category);
-
-                    item.active(id);
+                    this.selectSingle(item, product, id);
                 } else if (
                     item.category == 'vegetables' ||
                     item.category == 'sauces' ||
                     item.category == 'fillings'
                 ) {
-                    if (this.components[item.category].includes(item.key) || item.selected) {
-                        this.deleteMultipleIngridient(
-                            product.components[item.category.slice(0, -1)],
-                            item.key
+                    if (this.sidebar.basket.isAdded(product)) {
+                        this.sidebar.basket.updateTotalPrice(
+                            basketTotalPrice,
+                            this.sidebar.basket.addedProducts
                         );
-                        item.selected = false;
-                        item.active(id);
-                        return;
                     }
-
-                    this.components[item.category].push(item.key);
-                    product.components[item.category.slice(0, -1)] = this.components[item.category];
-
-                    item.selected = true;
-                    item.active(id);
+                    this.selectMultiple(item, product, id);
                 } else if (this.modal.currentPage === 6) {
                     product.components[item.category.slice(0, -1)] = this.components[item.category];
                 }
@@ -182,6 +177,36 @@ class App {
         }
     }
 
+    selectSingle(item, product, id) {
+        if (item.selected) return;
+
+        this.components[item.category] = item.key;
+
+        product.components[item.category.slice(0, -1)] = this.components[item.category];
+        product.price += item.price;
+
+        item.selected = true;
+        this.deleteSingleIngridient(id, item.category, product);
+        item.active(id);
+    }
+
+    selectMultiple(item, product, id) {
+        if (this.components[item.category].includes(item.key) || item.selected) {
+            this.deleteMultipleIngridient(product.components[item.category.slice(0, -1)], item.key);
+            item.selected = false;
+            item.active(id);
+            return;
+        }
+
+        this.components[item.category].push(item.key);
+        product.components[item.category.slice(0, -1)] = this.components[item.category];
+        product.price += item.price;
+
+        item.selected = true;
+        item.active(id);
+    }
+
+    // * PAGINATION
     modalPaginationEvents() {
         const prevButton = document.querySelector('.previous-button');
         const nextButton = document.querySelector('.next-button');
@@ -207,7 +232,11 @@ class App {
                 const button = document.querySelector(`button[data-product-card-id="${id}"]`);
                 const cloneButton = document.importNode(button, true);
 
-                cloneButton.addEventListener('click', () => this.sidebar.basket.addProduct(product));
+                cloneButton.addEventListener('click', () => {
+                    this.addInBasketModal(product);
+                    this.clearModalData(this.modal.currentProduct);
+                    this.modal.close();
+                });
 
                 modalFooter.append(cloneButton);
                 return;
@@ -232,6 +261,10 @@ class App {
         });
     }
 
+    addInBasketModal(product) {
+        this.sidebar.basket.addProduct(product);
+    }
+
     initProductCards() {
         let id = 1;
         for (let item of this.response.menu) {
@@ -253,6 +286,35 @@ class App {
 
                 const ingridient = new IngridientCard(this.ingridientItems[key][prop]);
                 this.ingridientCards.push(ingridient);
+            }
+        }
+    }
+
+    clearModalData(product) {
+        for (let ingridient of this.ingridientCards) {
+            ingridient.selected = false;
+        }
+        let sourceProduct = this.response.menu.find(item => item.name == product.name);
+        product.price = sourceProduct.price;
+        for (let item in product.components) {
+            console.log('product', product.components[item]);
+            console.log('standard', this.standardComponents[item]);
+            product.components[item] = this.standardComponents[item];
+        }
+        this.components = {
+            sizes: '1x',
+            breads: 'white-italian',
+            vegetables: [],
+            sauces: [],
+            fillings: [],
+        };
+    }
+
+    firstRenderIngridientsCards() {
+        for (const item of this.ingridientCards) {
+            if (item.key == '1x' || item.key == 'white-italian') {
+                item.active(item.id);
+                item.selected = true;
             }
         }
     }
@@ -283,17 +345,17 @@ class App {
         return this.ingridientCards.find(ingridientCard => ingridientCard.id == id);
     }
 
-    deleteSingleIngridient(id, category) {
+    deleteSingleIngridient(id, category, product) {
         let filtered = this.ingridientCards.filter(item => item.category == category);
         for (let item of filtered) {
             if (item.id != id) {
+                product.price -= item.price;
                 item.selected = false;
             }
         }
-        console.log(filtered);
     }
 
-    deleteMultipleIngridient(ingridients, category) {
+    deleteMultipleIngridient(ingridients, category, product) {
         const index = ingridients.findIndex(item => item == category);
         ingridients.splice(index, 1);
     }

@@ -21,7 +21,10 @@ export default class Basket {
         const basketProductsWrapper = document.getElementById('basket-content-wrapper');
         const basketTotalPrice = document.querySelector('.basket-total-price');
 
-        if (this.isAdded(product)) return;
+        if (this.isAdded(product)) {
+            this.updateTotalPrice(basketTotalPrice, this.addedProducts);
+            return;
+        }
 
         const basketProduct = this.createProduct();
         this.addTotalPrice(basketTotalPrice, product);
@@ -48,6 +51,19 @@ export default class Basket {
         }
         elem.innerHTML = `Итого: ${this.totalPrice} руб.`;
     }
+
+    // updateIngridientsPrice(data, item) {
+    //     let ingridientPrice = 0;
+    //     for (const ingridient of item.components) {
+    //         if (Array.isArray(ingridient)) {
+    //             for (const key of ingridient) {
+    //                 ingridientPrice += data[item.components[ingridient] + 's'][key].price;
+    //             }
+    //         }
+    //         // ingridientPrice += data[item.components[ingridient]]
+    //     }
+    //     return ingridientPrice;
+    // }
 
     updateProducts() {
         const basketProductsWrapper = document.getElementById('basket-content-wrapper');
@@ -90,6 +106,17 @@ export default class Basket {
         basketProductQuantity.className = 'basket-product-quantity';
         basketProductQuantity.innerHTML = item.productQuantity;
         return basketProductQuantity;
+    }
+
+    createIngridients(product, data) {
+        const ingridientWrapper = document.createElement('ul');
+        ingridientWrapper.className = 'basket-ingridient-wrapper';
+
+        for (let ingridient of product.components) {
+            const ingridient = document.createElement('li');
+            ingridient.className = 'basket-ingridient';
+            ingridient.innerHTML = data[ingridient];
+        }
     }
 
     createRemoveButton(item) {

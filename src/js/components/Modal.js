@@ -40,10 +40,12 @@ export default class Modal {
         ];
         this.currentProduct = null;
         this.currentPage = 1;
+        this.closed = true;
     }
 
     open(product) {
         this.currentProduct = product;
+        this.currentPage = 1;
         this.active(this.getCategoryItem(this.currentPage));
         document.body.style.overflow = 'hidden';
         const wrapper = document.querySelector('.modal-wrapper');
@@ -146,7 +148,6 @@ export default class Modal {
 
         const vegetables = document.createElement('span');
         vegetables.className = 'done-vegetables';
-        // vegetables.innerHTML = `Овощи: ${data.vegetables[product.components.vegetable]}`;
         vegetables.innerHTML = `Овощи: ${this.getIngridientName(data, productVegetable, 'vegetables')}`;
 
         const sauces = document.createElement('span');
@@ -170,7 +171,7 @@ export default class Modal {
         const closeButton = document.createElement('div');
         closeButton.className = 'close-modal';
         closeButton.innerHTML = '<i class="fas fa-times fa-2x"></i>';
-        closeButton.addEventListener('click', () => this.close());
+        // closeButton.addEventListener('click', () => this.close());
         return closeButton;
     }
 
@@ -178,7 +179,6 @@ export default class Modal {
         const nextButton = document.createElement('button');
         nextButton.className = 'next-button';
         nextButton.innerHTML = 'ВПЕРЕД';
-        // nextButton.addEventListener('click', () => this.nextPage());
         return nextButton;
     }
 
@@ -186,7 +186,6 @@ export default class Modal {
         const previousButton = document.createElement('button');
         previousButton.className = 'previous-button';
         previousButton.innerHTML = 'НАЗАД';
-        // previousButton.addEventListener('click', () => this.previousPage());
         return previousButton;
     }
 
