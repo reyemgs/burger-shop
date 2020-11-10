@@ -78,9 +78,9 @@ class App {
                     modalContent.innerHTML = '';
                     modalFooter.innerHTML = '';
                     this.modal.open(product);
-                    this.firstRenderIngridientsCards();
+                    // this.firstRenderIngridientsCards();
                     this.renderIngridientCards(ingridientCategory);
-                    this.selectIngridientEvent();
+                    this.selectIngridientEvent(product);
                     // this.ingridientChoiceEvent(product);
                     // this.clearModalData(product);
                     console.log(product);
@@ -130,19 +130,39 @@ class App {
             });
         }
     }
-
-    selectIngridientEvent() {
+    // TODO переделать выбор ингридиентов
+    selectIngridientEvent(product) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
 
         for (const ingridient of ingridients) {
             const id = ingridient.getAttribute('data-ingridient-id');
 
             ingridient.addEventListener('click', () => {
-                const item = this.getIngridientItem(id);
-                console.log(item);
-                item.selected = true;
-                item.active(id);
+                const ingridientItem = this.getIngridientItem(id);
+                const ingridientCategory = ingridientItem.category;
+
+                if (!Array.isArray(product.components[ingridientCategory])) {
+                    if (ingridientItem.selected) return;
+
+                    this.setSelectedFalse();
+
+                    product.components[ingridientCategory] = ingridientItem.key;
+                    ingridientItem.selected = true;
+                    ingridientItem.active(id);
+
+                    console.log('product components', product.components);
+                    console.log('is not array', true);
+                } else {
+                    console.log(false);
+                }
             });
+        }
+    }
+
+    setSelectedFalse() {
+        const ingridients = document.querySelectorAll('.ingridient-wrapper');
+        for (const item of ingridients) {
+            item.selected = false;
         }
     }
 
@@ -244,7 +264,7 @@ class App {
             }
 
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.selectIngridientEvent();
+            this.selectIngridientEvent(this.modal.currentProduct);
             // this.ingridientChoiceEvent(product);
         });
 
@@ -259,7 +279,7 @@ class App {
 
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.selectIngridientEvent();
+            this.selectIngridientEvent(this.modal.currentProduct);
             // this.ingridientChoiceEvent(product);
         });
     }
@@ -366,20 +386,20 @@ class App {
         return this.ingridientCards.find(ingridientCard => ingridientCard.id == id);
     }
 
-    deleteSingleIngridient(id, category, product) {
-        let filtered = this.ingridientCards.filter(item => item.category == category);
-        for (let item of filtered) {
-            if (item.id != id) {
-                product.price -= item.price;
-                item.selected = false;
-            }
-        }
-    }
+    // deleteSingleIngridient(id, category, product) {
+    //     let filtered = this.ingridientCards.filter(item => item.category == category);
+    //     for (let item of filtered) {
+    //         if (item.id != id) {
+    //             product.price -= item.price;
+    //             item.selected = false;
+    //         }
+    //     }
+    // }
 
-    deleteMultipleIngridient(ingridients, category, product) {
-        const index = ingridients.findIndex(item => item == category);
-        ingridients.splice(index, 1);
-    }
+    // deleteMultipleIngridient(ingridients, category, product) {
+    //     const index = ingridients.findIndex(item => item == category);
+    //     ingridients.splice(index, 1);
+    // }
 }
 
 const app = new App();
