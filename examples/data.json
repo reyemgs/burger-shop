@@ -1363,25 +1363,25 @@
     "white-sesame": {
       "name": "Белый с кунжутом",
       "description": "",
-      "price": 0,
+      "price": 10,
       "image": "/i/bread/white-sesame.png"
     },
     "oregano-parmesan": {
       "name": "Орегано-пармезан",
       "description": "",
-      "price": 0,
+      "price": 20,
       "image": "/i/bread/oregano-parmesan.png"
     },
     "grey": {
       "name": "Серый",
       "description": "",
-      "price": 0,
+      "price": 15,
       "image": "/i/bread/unknown_1.png"
     },
     "grey-with-cereal": {
       "name": "Серый с овсяными хлопьями",
       "description": "",
-      "price": 0,
+      "price": 25,
       "image": "/i/bread/grey-with-cereal.png"
     }
   },
