@@ -124,9 +124,11 @@ export default class Modal {
     }
 
     createDonePage(product, data) {
-        const productVegetable = product.components.vegetable;
-        const productSauce = product.components.sauce;
-        const productFilling = product.components.filling;
+        const productSize = product.components.sizes;
+        const productBread = product.components.breads;
+        const productVegetable = product.components.vegetables;
+        const productSauce = product.components.sauces;
+        const productFilling = product.components.fillings;
 
         const wrapper = document.createElement('div');
         wrapper.className = 'done-wrapper';
@@ -140,11 +142,11 @@ export default class Modal {
 
         const size = document.createElement('span');
         size.className = 'done-size';
-        size.innerHTML = `Размер: ${data.sizes[product.components.size].name}`;
+        size.innerHTML = `Размер: ${data.sizes[productSize].name}`;
 
         const bread = document.createElement('span');
         bread.className = 'done-bread';
-        bread.innerHTML = `Хлеб: ${data.breads[product.components.bread].name}`;
+        bread.innerHTML = `Хлеб: ${data.breads[productBread].name}`;
 
         const vegetables = document.createElement('span');
         vegetables.className = 'done-vegetables';
