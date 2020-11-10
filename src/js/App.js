@@ -80,7 +80,7 @@ class App {
                     this.modal.open(product);
                     // this.firstRenderIngridientsCards();
                     this.renderIngridientCards(ingridientCategory);
-                    this.selectIngridientEvent(product);
+                    this.ingridientSelectionEvent(product);
                     // this.ingridientChoiceEvent(product);
                     // this.clearModalData(product);
                     return;
@@ -128,7 +128,7 @@ class App {
         }
     }
     // TODO переделать выбор ингридиентов
-    selectIngridientEvent(product) {
+    ingridientSelectionEvent(product) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
 
         for (const ingridient of ingridients) {
@@ -140,7 +140,7 @@ class App {
 
                 if (!Array.isArray(product.components[ingridientCategory])) {
                     if (ingridientItem.selected) return;
-                    this.setSelectedSingleFalse();
+                    this.setFalseForSingles();
 
                     product.components[ingridientCategory] = ingridientItem.key;
                     product.price += ingridientItem.price;
@@ -155,7 +155,7 @@ class App {
         }
     }
 
-    setSelectedSingleFalse() {
+    setFalseForSingles() {
         for (const item of this.ingridientCards) {
             item.selected = false;
         }
@@ -259,7 +259,7 @@ class App {
             }
 
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.selectIngridientEvent(this.modal.currentProduct);
+            this.ingridientSelectionEvent(this.modal.currentProduct);
             // this.ingridientChoiceEvent(product);
         });
 
@@ -274,7 +274,7 @@ class App {
 
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.selectIngridientEvent(this.modal.currentProduct);
+            this.ingridientSelectionEvent(this.modal.currentProduct);
             // this.ingridientChoiceEvent(product);
         });
     }
