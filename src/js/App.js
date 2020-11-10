@@ -139,11 +139,18 @@ class App {
                 const ingridientCategory = ingridientItem.category;
 
                 if (!Array.isArray(product.components[ingridientCategory])) {
+                    // if selected = true, then do nothing
                     if (ingridientItem.selected) return;
-                    this.setFalseForSingles();
 
+                    // reset price, set false value for item.selected
+                    this.resetPriceForSingles(product, ingridientCategory);
+                    this.setFalseForSingles(ingridientCategory);
+
+                    // add component in product, increase price
                     product.components[ingridientCategory] = ingridientItem.key;
                     product.price += ingridientItem.price;
+
+                    // set selected = true, make element active
                     ingridientItem.selected = true;
                     ingridientItem.active(id);
 
@@ -155,9 +162,25 @@ class App {
         }
     }
 
-    setFalseForSingles() {
-        for (const item of this.ingridientCards) {
+    setFalseForSingles(category) {
+        const filteredIngridients = this.ingridientCards.filter(
+            ingridient => ingridient.category === category
+        );
+
+        for (const item of filteredIngridients) {
             item.selected = false;
+        }
+    }
+
+    resetPriceForSingles(product, category) {
+        const filteredIngridients = this.ingridientCards.filter(
+            ingridient => ingridient.category === category
+        );
+
+        for (const item of filteredIngridients) {
+            if (item.selected) {
+                product.price -= item.price;
+            }
         }
     }
 
@@ -265,7 +288,7 @@ class App {
 
         prevButton.addEventListener('click', () => {
             const modalFooter = document.querySelector('.modal-footer');
-            const product = this.modal.currentProduct;
+            // const product = this.modal.currentProduct;
 
             if (this.modal.currentPage === 1) return;
 
