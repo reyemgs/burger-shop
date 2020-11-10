@@ -62,6 +62,7 @@ class App {
         const decreaseButton = document.querySelectorAll('.decrease-button');
         const totalPrice = document.querySelector('.basket-total-price');
         const modalContent = document.querySelector('.modal-content');
+        const modalFooter = document.querySelector('.modal-footer');
         const closeModal = document.querySelector('.close-modal');
 
         // IN BASKET BUTTON
@@ -75,11 +76,13 @@ class App {
 
                 if (product.type === 'multiple') {
                     modalContent.innerHTML = '';
+                    modalFooter.innerHTML = '';
                     this.modal.open(product);
                     this.firstRenderIngridientsCards();
                     this.renderIngridientCards(ingridientCategory);
-                    this.ingridientChoiceEvent(product);
-                    this.clearModalData(product);
+                    this.selectIngridientEvent();
+                    // this.ingridientChoiceEvent(product);
+                    // this.clearModalData(product);
                     console.log(product);
                     return;
                 }
@@ -128,6 +131,21 @@ class App {
         }
     }
 
+    selectIngridientEvent() {
+        const ingridients = document.querySelectorAll('.ingridient-wrapper');
+
+        for (const ingridient of ingridients) {
+            const id = ingridient.getAttribute('data-ingridient-id');
+
+            ingridient.addEventListener('click', () => {
+                const item = this.getIngridientItem(id);
+                console.log(item);
+                item.selected = true;
+                item.active(id);
+            });
+        }
+    }
+
     productCategoryEvents() {
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         const menuItems = document.querySelectorAll('.menu-item');
@@ -147,64 +165,65 @@ class App {
     }
 
     // TODO !!! очистка модалки от выделения и очистка всех ингридиентов !!!
-    ingridientChoiceEvent(product) {
-        const ingridients = document.querySelectorAll('.ingridient-wrapper');
-        const basketTotalPrice = document.querySelector('.basket-total-price');
+    // ingridientChoiceEvent(product) {
+    //     const ingridients = document.querySelectorAll('.ingridient-wrapper');
+    //     const basketTotalPrice = document.querySelector('.basket-total-price');
 
-        for (const ingridient of ingridients) {
-            const id = ingridient.getAttribute('data-ingridient-id');
+    //     for (const ingridient of ingridients) {
+    //         const id = ingridient.getAttribute('data-ingridient-id');
 
-            ingridient.addEventListener('click', () => {
-                const item = this.getIngridientItem(id);
-                if (item.category == 'sizes' || item.category == 'breads') {
-                    this.selectSingle(item, product, id);
-                } else if (
-                    item.category == 'vegetables' ||
-                    item.category == 'sauces' ||
-                    item.category == 'fillings'
-                ) {
-                    if (this.sidebar.basket.isAdded(product)) {
-                        this.sidebar.basket.updateTotalPrice(
-                            basketTotalPrice,
-                            this.sidebar.basket.addedProducts
-                        );
-                    }
-                    this.selectMultiple(item, product, id);
-                } else if (this.modal.currentPage === 6) {
-                    product.components[item.category.slice(0, -1)] = this.components[item.category];
-                }
-            });
-        }
-    }
+    //         ingridient.addEventListener('click', () => {
+    //             const item = this.getIngridientItem(id);
+    //             if (item.category == 'sizes' || item.category == 'breads') {
+    //                 this.selectSingle(item, product, id);
+    //             } else if (
+    //                 item.category == 'vegetables' ||
+    //                 item.category == 'sauces' ||
+    //                 item.category == 'fillings'
+    //             ) {
+    //                 if (this.sidebar.basket.isAdded(product)) {
+    //                     this.sidebar.basket.updateTotalPrice(
+    //                         basketTotalPrice,
+    //                         this.sidebar.basket.addedProducts
+    //                     );
+    //                 }
+    //                 this.selectMultiple(item, product, id);
+    //             } else if (this.modal.currentPage === 6) {
+    //                 product.components[item.category.slice(0, -1)] = this.components[item.category];
+    //             }
+    //         });
+    //     }
+    // }
 
-    selectSingle(item, product, id) {
-        if (item.selected) return;
+    // selectSingle(item, product, id) {
+    //     if (item.selected) return;
 
-        this.components[item.category] = item.key;
+    //     this.components[item.category] = item.key;
 
-        product.components[item.category.slice(0, -1)] = this.components[item.category];
-        product.price += item.price;
+    //     product.components[item.category.slice(0, -1)] = this.components[item.category];
+    //     product.price += item.price;
+    //     console.log(product.price);
 
-        item.selected = true;
-        this.deleteSingleIngridient(id, item.category, product);
-        item.active(id);
-    }
+    //     item.selected = true;
+    //     this.deleteSingleIngridient(id, item.category, product);
+    //     item.active(id);
+    // }
 
-    selectMultiple(item, product, id) {
-        if (this.components[item.category].includes(item.key) || item.selected) {
-            this.deleteMultipleIngridient(product.components[item.category.slice(0, -1)], item.key);
-            item.selected = false;
-            item.active(id);
-            return;
-        }
+    // selectMultiple(item, product, id) {
+    //     if (this.components[item.category].includes(item.key) || item.selected) {
+    //         this.deleteMultipleIngridient(product.components[item.category.slice(0, -1)], item.key);
+    //         item.selected = false;
+    //         item.active(id);
+    //         return;
+    //     }
 
-        this.components[item.category].push(item.key);
-        product.components[item.category.slice(0, -1)] = this.components[item.category];
-        product.price += item.price;
+    //     this.components[item.category].push(item.key);
+    //     product.components[item.category.slice(0, -1)] = this.components[item.category];
+    //     product.price += item.price;
 
-        item.selected = true;
-        item.active(id);
-    }
+    //     item.selected = true;
+    //     item.active(id);
+    // }
 
     // * PAGINATION
     modalPaginationEvents() {
@@ -243,7 +262,8 @@ class App {
             }
 
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.ingridientChoiceEvent(product);
+            this.selectIngridientEvent();
+            // this.ingridientChoiceEvent(product);
         });
 
         prevButton.addEventListener('click', () => {
@@ -257,7 +277,8 @@ class App {
 
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.ingridientChoiceEvent(product);
+            this.selectIngridientEvent();
+            // this.ingridientChoiceEvent(product);
         });
     }
 
