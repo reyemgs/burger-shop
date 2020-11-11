@@ -30,7 +30,7 @@ class App {
             await this.initProductCards();
             await this.initIngridientCards();
             await this.productCategoryEvents();
-            await this.bootCategoryList('sandwiches');
+            await this.bootCategoryList('pizza');
             await this.events();
         })();
     }
@@ -49,7 +49,7 @@ class App {
         const modalContent = document.querySelector('.modal-content');
         const modalFooter = document.querySelector('.modal-footer');
 
-        // IN BASKET BUTTON
+        // * IN BASKET BUTTON
         for (const button of inBasketButton) {
             const id = button.dataset.productCardId;
 
@@ -72,7 +72,7 @@ class App {
             });
         }
 
-        // INCREASE QUANTITY
+        // * INCREASE QUANTITY
         for (const button of increaseButton) {
             const id = button.getAttribute('data-increase-id');
             const productQuantity = button.previousElementSibling;
@@ -88,7 +88,7 @@ class App {
             });
         }
 
-        // DECREASE QUANTITY
+        // * DECREASE QUANTITY
         for (const button of decreaseButton) {
             const id = button.getAttribute('data-decrease-id');
             const productQuantity = button.nextElementSibling;
@@ -105,6 +105,7 @@ class App {
         }
     }
 
+    // * CLOSE MODAL EVENT
     closeModalEvent() {
         const closeModal = document.querySelector('.close-modal');
         closeModal.addEventListener('click', () => {
@@ -168,7 +169,7 @@ class App {
                     ingridientItem.active(id);
 
                     // update basket total price
-                    this.updateBasket(product)
+                    this.updateBasket(product);
                 }
             });
         }
@@ -239,67 +240,6 @@ class App {
         this.sidebar.basket.updateTotalPrice(totalPrice, this.sidebar.basket.addedProducts);
         this.sidebar.basket.updateProducts();
     }
-
-    // TODO !!! очистка модалки от выделения и очистка всех ингридиентов !!!
-    // ingridientChoiceEvent(product) {
-    //     const ingridients = document.querySelectorAll('.ingridient-wrapper');
-    //     const basketTotalPrice = document.querySelector('.basket-total-price');
-
-    //     for (const ingridient of ingridients) {
-    //         const id = ingridient.getAttribute('data-ingridient-id');
-
-    //         ingridient.addEventListener('click', () => {
-    //             const item = this.getIngridientItem(id);
-    //             if (item.category == 'sizes' || item.category == 'breads') {
-    //                 this.selectSingle(item, product, id);
-    //             } else if (
-    //                 item.category == 'vegetables' ||
-    //                 item.category == 'sauces' ||
-    //                 item.category == 'fillings'
-    //             ) {
-    //                 if (this.sidebar.basket.isAdded(product)) {
-    //                     this.sidebar.basket.updateTotalPrice(
-    //                         basketTotalPrice,
-    //                         this.sidebar.basket.addedProducts
-    //                     );
-    //                 }
-    //                 this.selectMultiple(item, product, id);
-    //             } else if (this.modal.currentPage === 6) {
-    //                 product.components[item.category.slice(0, -1)] = this.components[item.category];
-    //             }
-    //         });
-    //     }
-    // }
-
-    // selectSingle(item, product, id) {
-    //     if (item.selected) return;
-
-    //     this.components[item.category] = item.key;
-
-    //     product.components[item.category.slice(0, -1)] = this.components[item.category];
-    //     product.price += item.price;
-    //     console.log(product.price);
-
-    //     item.selected = true;
-    //     this.deleteSingleIngridient(id, item.category, product);
-    //     item.active(id);
-    // }
-
-    // selectMultiple(item, product, id) {
-    //     if (this.components[item.category].includes(item.key) || item.selected) {
-    //         this.deleteMultipleIngridient(product.components[item.category.slice(0, -1)], item.key);
-    //         item.selected = false;
-    //         item.active(id);
-    //         return;
-    //     }
-
-    //     this.components[item.category].push(item.key);
-    //     product.components[item.category.slice(0, -1)] = this.components[item.category];
-    //     product.price += item.price;
-
-    //     item.selected = true;
-    //     item.active(id);
-    // }
 
     // * PAGINATION
     modalPaginationEvents() {
@@ -437,33 +377,6 @@ class App {
         }
     }
 
-    clearModalData(product) {
-        for (let ingridient of this.ingridientCards) {
-            ingridient.selected = false;
-        }
-        let sourceProduct = this.response.menu.find(item => item.name == product.name);
-        product.price = sourceProduct.price;
-        for (let item in product.components) {
-            product.components[item] = this.standardComponents[item];
-        }
-        this.components = {
-            sizes: '1x',
-            breads: 'white-italian',
-            vegetables: [],
-            sauces: [],
-            fillings: [],
-        };
-    }
-
-    firstRenderIngridientsCards() {
-        for (const item of this.ingridientCards) {
-            if (item.key == '1x' || item.key == 'white-italian') {
-                item.active(item.id);
-                item.selected = true;
-            }
-        }
-    }
-
     renderIngridientCards(category) {
         const filtered = this.ingridientCards.filter(item => item.category == category);
         for (const item of filtered) {
@@ -489,11 +402,6 @@ class App {
     getIngridientItem(id) {
         return this.ingridientCards.find(ingridientCard => ingridientCard.id == id);
     }
-
-    // deleteMultipleIngridient(ingridients, category, product) {
-    //     const index = ingridients.findIndex(item => item == category);
-    //     ingridients.splice(index, 1);
-    // }
 }
 
 const app = new App();
