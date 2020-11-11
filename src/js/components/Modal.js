@@ -176,7 +176,6 @@ export default class Modal {
         const closeButton = document.createElement('div');
         closeButton.className = 'close-modal';
         closeButton.innerHTML = '<i class="fas fa-times fa-2x"></i>';
-        // closeButton.addEventListener('click', () => this.close());
         return closeButton;
     }
 
