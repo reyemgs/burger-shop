@@ -341,12 +341,12 @@ header {
     &.active {
         display: block;
         position: fixed;
-        left: 13%;
-        top: 3%;
+        left: 25%;
+        top: 10%;
         visibility: visible;
         opacity: 1;
         z-index: 1000;
-        width: 75%;
+        width: 50%;
         opacity: 1;
         transition: opacity 0.15s ease;
         background: $body-background;
