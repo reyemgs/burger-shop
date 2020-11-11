@@ -5,10 +5,6 @@ export default class Basket {
         this.totalPrice = 0;
     }
 
-    monitoring() {
-        console.log(this.addedProducts);
-    }
-
     getProduct(id) {
         return this.addedProducts.find(product => product.id == id);
     }
@@ -36,7 +32,6 @@ export default class Basket {
         );
         basketProductsWrapper.append(basketProduct);
         this.addedProducts.push(product);
-        this.monitoring();
     }
 
     addTotalPrice(elem, product) {
@@ -51,19 +46,6 @@ export default class Basket {
         }
         elem.innerHTML = `Итого: ${this.totalPrice} руб.`;
     }
-
-    // updateIngridientsPrice(data, item) {
-    //     let ingridientPrice = 0;
-    //     for (const ingridient of item.components) {
-    //         if (Array.isArray(ingridient)) {
-    //             for (const key of ingridient) {
-    //                 ingridientPrice += data[item.components[ingridient] + 's'][key].price;
-    //             }
-    //         }
-    //         // ingridientPrice += data[item.components[ingridient]]
-    //     }
-    //     return ingridientPrice;
-    // }
 
     updateProducts() {
         const basketProductsWrapper = document.getElementById('basket-content-wrapper');
@@ -86,8 +68,8 @@ export default class Basket {
         const index = this.addedProducts.findIndex(item => item.id == id);
 
         // delete item from basket
-        this.addedProducts.splice(index, 1);
-        this.monitoring();
+        let product = this.addedProducts.splice(index, 1);
+        product.added = false;
     }
 
     // * PRODUCT * //
