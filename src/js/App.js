@@ -78,11 +78,10 @@ class App {
                     modalContent.innerHTML = '';
                     modalFooter.innerHTML = '';
                     this.modal.open(product);
-                    // this.firstRenderIngridientsCards();
+                    console.log(product);
+                    this.activateSelectedComponents(product);
                     this.renderIngridientCards(ingridientCategory);
                     this.ingridientSelectionEvent(product);
-                    // this.ingridientChoiceEvent(product);
-                    // this.clearModalData(product);
                     return;
                 }
                 this.sidebar.basket.addProduct(this.getProductItem(id));
@@ -155,6 +154,7 @@ class App {
                     ingridientItem.selected = true;
                     ingridientItem.active(id);
 
+                    // update basket total price
                     this.updateBasket(product);
 
                     console.log(ingridientItem.key, ingridientItem.price);
@@ -193,10 +193,20 @@ class App {
     }
 
     activateSelectedComponents(product) {
+        // set false all components
+        this.setFalseAllComponents();
+
         for (const item of this.ingridientCards) {
+            // set true if components exist
             if (product.components[item.category] === item.key) {
                 item.selected = true;
             }
+        }
+    }
+
+    setFalseAllComponents() {
+        for (const item of this.ingridientCards) {
+            item.selected = false;
         }
     }
 
