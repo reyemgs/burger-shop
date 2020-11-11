@@ -157,8 +157,29 @@ class App {
 
                     // update basket total price
                     this.updateBasket(product);
-                } else {
-                    console.log(false);
+                }
+                // selecting multiple ingridients
+                else {
+                    // if item selected then do item false
+                    if (ingridientItem.selected) {
+                        this.removeMultipleIngridient(
+                            product.components[ingridientCategory],
+                            ingridientItem.key
+                        );
+                        product.price -= ingridientItem.price;
+                        console.log(product.price);
+                        ingridientItem.selected = false;
+                        ingridientItem.active(id);
+                        return;
+                    }
+
+                    // add component in array, increase price
+                    product.components[ingridientCategory].push(ingridientItem.key);
+                    product.price += ingridientItem.price;
+
+                    // set selected = true, make element active
+                    ingridientItem.selected = true;
+                    ingridientItem.active(id);
                 }
             });
         }
@@ -190,13 +211,24 @@ class App {
         }
     }
 
+    removeMultipleIngridient(ingridients, category) {
+        const index = ingridients.findIndex(item => item === category);
+        ingridients.splice(index, 1);
+    }
+
     activateSelectedComponents(product) {
         // set false all components
         this.setFalseAllComponents();
 
         for (const item of this.ingridientCards) {
             // set true if components exist
-            if (product.components[item.category] === item.key) {
+            if (Array.isArray(product.components[item.category])) {
+                for (const component of product.components[item.category]) {
+                    if (component === item.key) {
+                        item.selected = true;
+                    }
+                }
+            } else if (product.components[item.category] === item.key) {
                 item.selected = true;
             }
         }
