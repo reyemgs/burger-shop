@@ -27,6 +27,11 @@ export default class ProductCard {
         }
     }
 
+    updateQuantity() {
+        const quantityLabel = document.querySelector(`.product-quantity[data-quantity-id="${this.id}"]`);
+        quantityLabel.innerHTML = this.productQuantity;
+    }
+
     createMarket(response) {
         const productMarket = document.createElement('img');
         productMarket.className = 'product-market';
@@ -84,6 +89,7 @@ export default class ProductCard {
 
         const productQuantity = document.createElement('span');
         productQuantity.className = 'product-quantity';
+        productQuantity.setAttribute('data-quantity-id', this.id);
         productQuantity.innerHTML = this.productQuantity;
 
         const productIncreaseButton = document.createElement('div');
