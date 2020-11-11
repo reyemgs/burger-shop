@@ -126,7 +126,7 @@ class App {
             });
         }
     }
-    // TODO переделать выбор ингридиентов
+
     ingridientSelectionEvent(product) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
 
@@ -303,14 +303,12 @@ class App {
 
                 const button = document.querySelector(`button[data-product-card-id="${id}"]`);
                 const cloneButton = document.importNode(button, true);
+
                 if (this.sidebar.basket.isAdded(product)) {
-                    cloneButton.textContent = 'ДОБАВЛЕН';
-                    cloneButton.style['background'] = 'grey';
-                    cloneButton.style['color'] = 'white';
+                    this.changeModalButton(cloneButton);
                 } else {
                     cloneButton.addEventListener('click', () => {
                         this.addInBasketModal(product);
-                        // this.clearModalData(this.modal.currentProduct);
                         this.modal.close();
                     });
                 }
@@ -321,7 +319,6 @@ class App {
 
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
             this.ingridientSelectionEvent(this.modal.currentProduct);
-            // this.ingridientChoiceEvent(product);
         });
 
         prevButton.addEventListener('click', () => {
@@ -336,8 +333,13 @@ class App {
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
             this.ingridientSelectionEvent(this.modal.currentProduct);
-            // this.ingridientChoiceEvent(product);
         });
+    }
+
+    changeModalButton(elem) {
+        elem.textContent = 'ДОБАВЛЕН';
+        elem.style['background'] = 'grey';
+        elem.style['color'] = 'white';
     }
 
     productCategoryEvents() {
