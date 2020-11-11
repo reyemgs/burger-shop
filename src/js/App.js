@@ -92,7 +92,7 @@ class App {
         // CLOSE MODAL
         closeModal.addEventListener('click', () => {
             this.modal.close();
-            this.clearModalData(this.modal.currentProduct);
+            // this.clearModalData(this.modal.currentProduct);
         });
 
         // INCREASE QUANTITY
@@ -138,6 +138,7 @@ class App {
                 const ingridientItem = this.getIngridientItem(id);
                 const ingridientCategory = ingridientItem.category;
 
+                // check components is single or multiple
                 if (!Array.isArray(product.components[ingridientCategory])) {
                     // if selected = true, then do nothing
                     if (ingridientItem.selected) return;
@@ -154,6 +155,7 @@ class App {
                     ingridientItem.selected = true;
                     ingridientItem.active(id);
 
+                    console.log(ingridientItem.key, ingridientItem.price);
                     console.log('product price', product.price);
                 } else {
                     console.log(false);
@@ -273,7 +275,7 @@ class App {
 
                 cloneButton.addEventListener('click', () => {
                     this.addInBasketModal(product);
-                    this.clearModalData(this.modal.currentProduct);
+                    // this.clearModalData(this.modal.currentProduct);
                     this.modal.close();
                 });
 
