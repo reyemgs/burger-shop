@@ -47,20 +47,27 @@ export default class Modal {
         this.currentProduct = product;
         this.currentPage = 1;
         this.active(this.getCategoryItem(this.currentPage));
+
         document.body.style.overflow = 'hidden';
+
         const wrapper = document.querySelector('.modal-wrapper');
         const shadow = document.querySelector('.shadow-modal');
         const title = document.querySelector('.modal-title');
+
         title.innerHTML = this.getMenuItem(this.currentPage).title;
+
         wrapper.classList.toggle('active');
         shadow.classList.toggle('active');
     }
 
     close() {
         this.currentPage = 1;
+
         document.body.style.overflow = 'visible';
+
         const wrapper = document.querySelector('.modal-wrapper');
         const shadow = document.querySelector('.shadow-modal');
+
         wrapper.classList.toggle('active');
         shadow.classList.toggle('active');
     }
@@ -217,6 +224,48 @@ export default class Modal {
         const footer = document.createElement('div');
         footer.className = 'modal-footer';
         return footer;
+    }
+
+    createPrice(product) {
+        const price = document.createElement('span');
+        price.className = 'modal-price';
+        price.innerHTML = `Цена: ${product.price}`;
+        return price;
+    }
+
+    createTotalPrice(product) {
+        const totalPrice = document.createElement('span');
+        totalPrice.className = 'modal-total-price';
+        totalPrice.innerHTML = `Итого: ${product.price}`;
+        return totalPrice;
+    }
+
+    createIncreaseButton(product) {
+        const increaseButton = document.createElement('div');
+        increaseButton.className = 'modal-increase-button';
+        increaseButton.innerHTML = '<i class="fas fa-plus-circle"></i>';
+        increaseButton.addEventListener('click', () => product.increaseQuantity());
+        return increaseButton;
+    }
+
+    createDeacreseButton(product) {
+        const decreaseButton = document.createElement('div');
+        decreaseButton.className = 'modal-decrease-button';
+        decreaseButton.innerHTML = '<i class="fas fa-minus-circle"></i>';
+        decreaseButton.addEventListener('click', () => product.decreaseQuantity());
+        return decreaseButton;
+    }
+
+    createProductQuantity(product) {
+        const productQuantity = document.createElement('span');
+        productQuantity.className = 'product-quantity';
+        productQuantity.innerHTML = product.productQuantity;
+        return productQuantity;
+    }
+
+    updatePrice(product) {
+        const price = document.querySelector('.modal-price');
+        price.innerHTML = `Цена: ${product.price}`;
     }
 
     createItemsWrapper() {
