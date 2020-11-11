@@ -63,13 +63,35 @@ export default class Basket {
         }
     }
 
-    removeProduct(id) {
+    removeProduct(id, category) {
         // find index of removed item
         const index = this.addedProducts.findIndex(item => item.id == id);
+
+        // if find category equal category then change style of button
+        if (this.findCurrentCategory() == category) {
+            const productButton = document.querySelector(
+                `button.in-basket-button[data-product-card-id="${id}"]`
+            );
+            productButton.textContent = 'В КОРЗИНУ';
+            productButton.removeAttribute('style');
+        }
 
         // delete item from basket
         let product = this.addedProducts.splice(index, 1);
         product.added = false;
+    }
+
+    findCurrentCategory() {
+        const menuItems = document.querySelectorAll('.menu-item');
+        let currentCategory = null;
+
+        // find active item and return its id(category)
+        for (const item of menuItems) {
+            if (item.classList.contains('active')) {
+                currentCategory = item.getAttribute('id');
+            }
+        }
+        return currentCategory;
     }
 
     // * PRODUCT * //
@@ -111,7 +133,7 @@ export default class Basket {
         basketRemoveButton.innerHTML = '<i class="fas fa-trash-alt fa-lg"></i>';
 
         basketRemoveButton.addEventListener('click', () => {
-            this.removeProduct(item.id);
+            this.removeProduct(item.id, item.category);
             this.updateTotalPrice(totalPrice, this.addedProducts);
             this.updateProducts();
         });
