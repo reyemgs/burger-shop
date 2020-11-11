@@ -130,6 +130,9 @@ export default class Modal {
         const productSauce = product.components.sauces;
         const productFilling = product.components.fillings;
 
+        const footer = document.querySelector('.modal-footer');
+        footer.append(this.createInBasketButton());
+
         const wrapper = document.createElement('div');
         wrapper.className = 'done-wrapper';
 
@@ -189,6 +192,13 @@ export default class Modal {
         previousButton.className = 'previous-button';
         previousButton.innerHTML = 'НАЗАД';
         return previousButton;
+    }
+
+    createInBasketButton() {
+        const inBasketButton = document.createElement('button');
+        inBasketButton.className = 'modal-in-basket';
+        inBasketButton.innerHTML = 'В КОРЗИНУ';
+        return inBasketButton;
     }
 
     createTitle() {
