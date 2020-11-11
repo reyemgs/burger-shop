@@ -33,7 +33,9 @@ $prev-next-buttons: #e6583f;
     color: $white;
     background: $modal-items;
     &:hover {
-        color: $yellow;
+        background: $yellow-card;
+        border: 2px solid $yellow-scrollbar;
+        color: $yellow-text;
     }
 }
 

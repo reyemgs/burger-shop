@@ -358,7 +358,9 @@ header .fa-bars {
   background: #fa6045;
 }
 .modal-wrapper .items-wrapper .previous-button:hover {
-  color: #fad045;
+  background: #ff9900d3;
+  border: 2px solid #ff9900;
+  color: #6b581a;
 }
 .modal-wrapper .items-wrapper .next-button {
   display: inline;
@@ -373,7 +375,9 @@ header .fa-bars {
   background: #fa6045;
 }
 .modal-wrapper .items-wrapper .next-button:hover {
-  color: #fad045;
+  background: #ff9900d3;
+  border: 2px solid #ff9900;
+  color: #6b581a;
 }
 .modal-wrapper .items-wrapper .items-list {
   display: inline;
