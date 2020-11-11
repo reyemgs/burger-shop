@@ -518,15 +518,30 @@ header .fa-bars {
 }
 .modal-wrapper .modal-footer .modal-in-basket {
   display: block;
-  margin: 10px auto;
-  width: 150px;
-  height: 40px;
+  margin: auto;
+  width: 130px;
+  height: 35px;
   color: #6b581a;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: bold;
   outline: none;
   background: #fad045;
   border-radius: 8px;
+}
+.modal-wrapper .modal-footer .modal-price {
+  display: block;
+  margin: 25px auto;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+  color: #fa6045;
+}
+.modal-wrapper .modal-footer .modal-total-price {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fa6045;
 }
 
 .shadow-modal {
