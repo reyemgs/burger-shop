@@ -155,6 +155,8 @@ class App {
                     ingridientItem.selected = true;
                     ingridientItem.active(id);
 
+                    this.updateBasket(product);
+
                     console.log(ingridientItem.key, ingridientItem.price);
                     console.log('product price', product.price);
                 } else {
@@ -165,25 +167,44 @@ class App {
     }
 
     setFalseForSingles(category) {
+        // filter ingridients by category
         const filteredIngridients = this.ingridientCards.filter(
             ingridient => ingridient.category === category
         );
 
+        // set selected false
         for (const item of filteredIngridients) {
             item.selected = false;
         }
     }
 
     resetPriceForSingles(product, category) {
+        // filter ingridients by category
         const filteredIngridients = this.ingridientCards.filter(
             ingridient => ingridient.category === category
         );
 
+        // selected = true items subtract price value
         for (const item of filteredIngridients) {
             if (item.selected) {
                 product.price -= item.price;
             }
         }
+    }
+
+    activateSelectedComponents(product) {
+        for (const item of this.ingridientCards) {
+            if (product.components[item.category] === item.key) {
+                item.selected = true;
+            }
+        }
+    }
+
+    updateBasket(product) {
+        const totalPrice = document.querySelector('.basket-total-price');
+        if (!this.sidebar.basket.isAdded(product)) return;
+        this.sidebar.basket.updateTotalPrice(totalPrice, this.sidebar.basket.addedProducts);
+        this.sidebar.basket.updateProducts();
     }
 
     // TODO !!! очистка модалки от выделения и очистка всех ингридиентов !!!
@@ -272,12 +293,17 @@ class App {
 
                 const button = document.querySelector(`button[data-product-card-id="${id}"]`);
                 const cloneButton = document.importNode(button, true);
-
-                cloneButton.addEventListener('click', () => {
-                    this.addInBasketModal(product);
-                    // this.clearModalData(this.modal.currentProduct);
-                    this.modal.close();
-                });
+                if (this.sidebar.basket.isAdded(product)) {
+                    cloneButton.textContent = 'ДОБАВЛЕН';
+                    cloneButton.style['background'] = 'grey';
+                    cloneButton.style['color'] = 'white';
+                } else {
+                    cloneButton.addEventListener('click', () => {
+                        this.addInBasketModal(product);
+                        // this.clearModalData(this.modal.currentProduct);
+                        this.modal.close();
+                    });
+                }
 
                 modalFooter.append(cloneButton);
                 return;
@@ -403,16 +429,6 @@ class App {
     getIngridientItem(id) {
         return this.ingridientCards.find(ingridientCard => ingridientCard.id == id);
     }
-
-    // deleteSingleIngridient(id, category, product) {
-    //     let filtered = this.ingridientCards.filter(item => item.category == category);
-    //     for (let item of filtered) {
-    //         if (item.id != id) {
-    //             product.price -= item.price;
-    //             item.selected = false;
-    //         }
-    //     }
-    // }
 
     // deleteMultipleIngridient(ingridients, category, product) {
     //     const index = ingridients.findIndex(item => item == category);
