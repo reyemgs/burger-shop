@@ -15,22 +15,6 @@ class App {
         this.ingridientCards = [];
         this.ingridientItems = {};
 
-        this.components = {
-            sizes: '1x',
-            breads: 'white-italian',
-            vegetables: [],
-            sauces: [],
-            fillings: [],
-        };
-
-        this.standardComponents = {
-            size: '1x',
-            bread: 'white-italian',
-            vegetable: [],
-            sauce: [],
-            filling: [],
-        };
-
         this.sidebar = new SideBar();
         this.modal = new Modal();
         this.categoryList = new ProductCategoryList();
@@ -167,9 +151,11 @@ class App {
                             ingridientItem.key
                         );
                         product.price -= ingridientItem.price;
-                        console.log(product.price);
+
                         ingridientItem.selected = false;
                         ingridientItem.active(id);
+
+                        this.updateBasket(product);
                         return;
                     }
 
@@ -180,6 +166,9 @@ class App {
                     // set selected = true, make element active
                     ingridientItem.selected = true;
                     ingridientItem.active(id);
+
+                    // update basket total price
+                    this.updateBasket(product)
                 }
             });
         }
