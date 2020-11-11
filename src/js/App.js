@@ -65,6 +65,7 @@ class App {
                     this.activateSelectedComponents(product);
                     this.renderIngridientCards(ingridientCategory);
                     this.ingridientSelectionEvent(product);
+                    modalFooter.append(this.modal.createPrice(product));
                     return;
                 }
                 this.addInBasket(this.getProductItem(id));
@@ -142,6 +143,7 @@ class App {
 
                     // update basket total price
                     this.updateBasket(product);
+                    this.modal.updatePrice(product);
                 }
                 // selecting multiple ingridients// if item selected then do item false
                 else if (ingridientItem.selected) {
@@ -160,6 +162,7 @@ class App {
 
                     // update basket total price
                     this.updateBasket(product);
+                    this.modal.updatePrice(product);
                     return;
                 }
                 // add component in array, increase price
@@ -174,6 +177,7 @@ class App {
 
                     // update basket total price
                     this.updateBasket(product);
+                    this.modal.updatePrice(product);
                 }
             });
         }
@@ -264,8 +268,9 @@ class App {
             if (this.modal.currentPage === 6) {
                 modalContent.append(
                     this.modal.currentProduct.createImage(),
-                    this.modal.createDonePage(this.modal.currentProduct, this.response)
+                    this.modal.createDonePage(product, this.response)
                 );
+                modalFooter.append(this.modal.createTotalPrice(product));
 
                 const button = document.querySelector('.modal-in-basket');
                 const productButton = document.querySelector(
@@ -283,7 +288,7 @@ class App {
                 }
                 return;
             }
-
+            modalFooter.append(this.modal.createPrice(product));
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
             this.ingridientSelectionEvent(this.modal.currentProduct);
         });
@@ -297,6 +302,8 @@ class App {
             modalFooter.innerHTML = '';
 
             this.modal.previousPage();
+
+            modalFooter.append(this.modal.createPrice(product));
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
             this.ingridientSelectionEvent(product);
         });
