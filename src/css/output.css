@@ -511,6 +511,7 @@ header .fa-bars {
 }
 .modal-wrapper .modal-footer {
   height: 100px;
+  text-align: center;
   border-top: 4px solid #fad045;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
@@ -541,6 +542,28 @@ header .fa-bars {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
+  color: #fa6045;
+}
+.modal-wrapper .modal-footer .modal-product-quantity {
+  display: inline-block;
+  text-align: center;
+  background: #ffffff;
+  margin: auto;
+  width: 40px;
+  height: 20px;
+  border: 1px solid #999999;
+  border-radius: 5px;
+}
+.modal-wrapper .modal-footer .modal-increase-button,
+.modal-wrapper .modal-footer .modal-decrease-button {
+  display: inline-block;
+  text-align: center;
+  margin: auto;
+  padding: 5px 10px;
+  color: #6b581a;
+}
+.modal-wrapper .modal-footer .modal-increase-button:hover,
+.modal-wrapper .modal-footer .modal-decrease-button:hover {
   color: #fa6045;
 }
 
