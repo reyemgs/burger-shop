@@ -82,7 +82,17 @@ export default class Basket {
     }
 
     removeProduct(id) {
+        // find index of removed item
         const index = this.addedProducts.findIndex(item => item.id == id);
+
+        // change button style and text content when remove product
+        const productButton = document.querySelector(
+            `button.in-basket-button[data-product-card-id="${id}"]`
+        );
+        productButton.textContent = 'В КОРЗИНУ';
+        productButton.removeAttribute('style');
+
+        // delete item from basket
         this.addedProducts.splice(index, 1);
         this.monitoring();
     }
