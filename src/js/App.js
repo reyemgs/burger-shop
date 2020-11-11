@@ -30,7 +30,7 @@ class App {
             await this.initProductCards();
             await this.initIngridientCards();
             await this.productCategoryEvents();
-            await this.bootCategoryList('pizza');
+            await this.bootCategoryList('sandwiches');
             await this.events();
         })();
     }
@@ -266,17 +266,40 @@ class App {
 
             this.modal.nextPage();
             if (this.modal.currentPage === 6) {
+                modalFooter.append(
+                    this.modal.createDeacreseButton(product),
+                    this.modal.createProductQuantity(product),
+                    this.modal.createIncreaseButton(product),
+                    this.modal.createTotalPrice(product)
+                );
                 modalContent.append(
                     this.modal.currentProduct.createImage(),
                     this.modal.createDonePage(product, this.response)
                 );
-                modalFooter.append(this.modal.createTotalPrice(product));
+                this.modal.updateTotalPrice(product);
+
+                const increaseButton = document.querySelector('.modal-increase-button');
+                const decreaseButton = document.querySelector('.modal-decrease-button');
+                const quantityLabel = document.querySelector('.modal-product-quantity');
+
+                increaseButton.addEventListener('click', () => {
+                    product.increaseQuantity(quantityLabel);
+                    this.modal.updateTotalPrice(product);
+                    this.updateBasket(product);
+                    product.updateQuantity();
+                });
+
+                decreaseButton.addEventListener('click', () => {
+                    product.decreaseQuantity(quantityLabel);
+                    this.modal.updateTotalPrice(product);
+                    this.updateBasket(product);
+                    product.updateQuantity();
+                });
 
                 const button = document.querySelector('.modal-in-basket');
                 const productButton = document.querySelector(
                     `button.in-basket-button[data-product-card-id="${product.id}"]`
                 );
-
                 if (this.sidebar.basket.isAdded(product)) {
                     this.changeModalButton(button);
                 } else {
