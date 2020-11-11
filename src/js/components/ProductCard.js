@@ -55,10 +55,11 @@ export default class ProductCard {
         return productDescription;
     }
 
-    createPrice() {
+    createPrice(response) {
         const productPrice = document.createElement('span');
         productPrice.className = 'product-price';
-        productPrice.innerHTML = `Цена: ${this.price} руб.`;
+        const product = response.menu.find(item => item.name == this.name);
+        productPrice.innerHTML = `Цена: ${product.price} руб.`;
         return productPrice;
     }
 
@@ -116,7 +117,7 @@ export default class ProductCard {
             this.createImage(),
             this.createName(),
             this.createDescription(),
-            this.createPrice(),
+            this.createPrice(response),
             this.createSetAmountWrapper()
         );
         rightSideWrapper.append(productCardWrapper);
