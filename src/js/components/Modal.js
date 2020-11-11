@@ -244,7 +244,7 @@ export default class Modal {
         const increaseButton = document.createElement('div');
         increaseButton.className = 'modal-increase-button';
         increaseButton.innerHTML = '<i class="fas fa-plus-circle"></i>';
-        increaseButton.addEventListener('click', () => product.increaseQuantity());
+        // increaseButton.addEventListener('click', () => product.increaseQuantity());
         return increaseButton;
     }
 
@@ -252,13 +252,13 @@ export default class Modal {
         const decreaseButton = document.createElement('div');
         decreaseButton.className = 'modal-decrease-button';
         decreaseButton.innerHTML = '<i class="fas fa-minus-circle"></i>';
-        decreaseButton.addEventListener('click', () => product.decreaseQuantity());
+        // decreaseButton.addEventListener('click', () => product.decreaseQuantity());
         return decreaseButton;
     }
 
     createProductQuantity(product) {
         const productQuantity = document.createElement('span');
-        productQuantity.className = 'product-quantity';
+        productQuantity.className = 'modal-product-quantity';
         productQuantity.innerHTML = product.productQuantity;
         return productQuantity;
     }
@@ -266,6 +266,11 @@ export default class Modal {
     updatePrice(product) {
         const price = document.querySelector('.modal-price');
         price.innerHTML = `Цена: ${product.price}`;
+    }
+
+    updateTotalPrice(product) {
+        const totalPrice = document.querySelector('.modal-total-price');
+        totalPrice.innerHTML = `Итого: ${product.price * product.productQuantity}`;
     }
 
     createItemsWrapper() {
