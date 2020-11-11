@@ -301,19 +301,16 @@ class App {
                     this.modal.createDonePage(this.modal.currentProduct, this.response)
                 );
 
-                const button = document.querySelector(`button[data-product-card-id="${id}"]`);
-                const cloneButton = document.importNode(button, true);
+                const button = document.querySelector('.modal-in-basket');
 
                 if (this.sidebar.basket.isAdded(product)) {
-                    this.changeModalButton(cloneButton);
+                    this.changeModalButton(button);
                 } else {
-                    cloneButton.addEventListener('click', () => {
+                    button.addEventListener('click', () => {
                         this.addInBasketModal(product);
                         this.modal.close();
                     });
                 }
-
-                modalFooter.append(cloneButton);
                 return;
             }
 
