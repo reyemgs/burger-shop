@@ -11,6 +11,7 @@ export default class ProductCard {
         this.weight = item.weight;
         this.components = item.components;
         this.productQuantity = 1;
+        this.added = false;
     }
 
     increaseQuantity(productQuantity) {
