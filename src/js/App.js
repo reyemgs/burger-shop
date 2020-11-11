@@ -42,6 +42,7 @@ class App {
             await this.sidebar.render();
             await this.modal.createModal();
             await this.modalPaginationEvents();
+            await this.closeModalEvent();
             await this.initProductCards();
             await this.initIngridientCards();
             await this.productCategoryEvents();
@@ -63,7 +64,6 @@ class App {
         const totalPrice = document.querySelector('.basket-total-price');
         const modalContent = document.querySelector('.modal-content');
         const modalFooter = document.querySelector('.modal-footer');
-        const closeModal = document.querySelector('.close-modal');
 
         // IN BASKET BUTTON
         for (const button of inBasketButton) {
@@ -87,11 +87,6 @@ class App {
                 this.changeButtonWithoutModal(button);
             });
         }
-
-        // CLOSE MODAL
-        closeModal.addEventListener('click', () => {
-            this.modal.close();
-        });
 
         // INCREASE QUANTITY
         for (const button of increaseButton) {
@@ -126,6 +121,13 @@ class App {
         }
     }
 
+    closeModalEvent() {
+        const closeModal = document.querySelector('.close-modal');
+        closeModal.addEventListener('click', () => {
+            this.modal.close();
+        });
+    }
+
     ingridientSelectionEvent(product) {
         const ingridients = document.querySelectorAll('.ingridient-wrapper');
 
@@ -155,9 +157,6 @@ class App {
 
                     // update basket total price
                     this.updateBasket(product);
-
-                    console.log(ingridientItem.key, ingridientItem.price);
-                    console.log('product price', product.price);
                 } else {
                     console.log(false);
                 }
@@ -356,6 +355,17 @@ class App {
         elem.style['color'] = 'white';
     }
 
+    changeStyleOfAdded(product) {
+        const productButton = document.querySelector(
+            `button.in-basket-button[data-product-card-id="${product.id}"]`
+        );
+        if (product.category == 'sandwiches' && product.added) {
+            this.changeProductCardButton(productButton);
+        } else if (product.added) {
+            this.changeButtonWithoutModal(productButton);
+        }
+    }
+
     productCategoryEvents() {
         const rightSideWrapper = document.querySelector('#rightside-wrapper');
         const menuItems = document.querySelectorAll('.menu-item');
@@ -368,7 +378,10 @@ class App {
                 this.currentCategory = category;
                 this.categoryList.active(this.currentCategory);
                 rightSideWrapper.innerHTML = '';
-                filtered.map(item => item.createProductCard(this.response));
+                filtered.map(item => {
+                    item.createProductCard(this.response);
+                    this.changeStyleOfAdded(item);
+                });
                 this.events();
             });
         }
@@ -376,7 +389,6 @@ class App {
 
     addInBasket(product) {
         this.sidebar.basket.addProduct(product);
-        product.added = true;
     }
 
     initProductCards() {
