@@ -143,24 +143,28 @@ class App {
                     // update basket total price
                     this.updateBasket(product);
                 }
-                // selecting multiple ingridients
+                // selecting multiple ingridients// if item selected then do item false
+                else if (ingridientItem.selected) {
+                    // delete element when selected false
+                    this.removeMultipleIngridient(
+                        product.components[ingridientCategory],
+                        ingridientItem.key
+                    );
+
+                    // decrease price
+                    product.price -= ingridientItem.price;
+
+                    // set false value
+                    ingridientItem.selected = false;
+                    ingridientItem.active(id);
+
+                    // update basket total price
+                    this.updateBasket(product);
+                    return;
+                }
+                // add component in array, increase price
                 else {
-                    // if item selected then do item false
-                    if (ingridientItem.selected) {
-                        this.removeMultipleIngridient(
-                            product.components[ingridientCategory],
-                            ingridientItem.key
-                        );
-                        product.price -= ingridientItem.price;
-
-                        ingridientItem.selected = false;
-                        ingridientItem.active(id);
-
-                        this.updateBasket(product);
-                        return;
-                    }
-
-                    // add component in array, increase price
+                    // push ingridients in array
                     product.components[ingridientCategory].push(ingridientItem.key);
                     product.price += ingridientItem.price;
 
@@ -299,13 +303,13 @@ class App {
     }
 
     changeModalButton(elem) {
-        elem.textContent = 'ДОБАВЛЕНО';
-        elem.style['background'] = 'grey';
+        elem.textContent = 'В КОРЗИНЕ';
+        elem.style['background'] = '#757575';
         elem.style['color'] = 'white';
     }
 
     changeButtonWithoutModal(elem) {
-        elem.textContent = 'ДОБАВЛЕНО';
+        elem.textContent = 'В КОРЗИНЕ';
         elem.style['background'] = '#757575';
         elem.style['color'] = 'white';
     }
