@@ -31,6 +31,8 @@ export default class Basket {
             this.createRemoveButton(product)
         );
         basketProductsWrapper.append(basketProduct);
+
+        product.added = true;
         this.addedProducts.push(product);
     }
 
@@ -77,8 +79,8 @@ export default class Basket {
         }
 
         // delete item from basket
-        let product = this.addedProducts.splice(index, 1);
-        product.added = false;
+        this.addedProducts[index].added = false;
+        this.addedProducts.splice(index, 1);
     }
 
     findCurrentCategory() {
