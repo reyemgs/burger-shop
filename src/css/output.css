@@ -512,7 +512,7 @@ header .fa-bars {
   border-bottom-right-radius: 10px;
   background: #fff8e2;
 }
-.modal-wrapper .modal-footer .in-basket-button {
+.modal-wrapper .modal-footer .modal-in-basket {
   display: block;
   margin: 10px auto;
   width: 150px;
