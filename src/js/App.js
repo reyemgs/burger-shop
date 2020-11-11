@@ -78,20 +78,19 @@ class App {
                     modalContent.innerHTML = '';
                     modalFooter.innerHTML = '';
                     this.modal.open(product);
-                    console.log(product);
                     this.activateSelectedComponents(product);
                     this.renderIngridientCards(ingridientCategory);
                     this.ingridientSelectionEvent(product);
                     return;
                 }
-                this.sidebar.basket.addProduct(this.getProductItem(id));
+                this.addInBasket(this.getProductItem(id));
+                this.changeButtonWithoutModal(button);
             });
         }
 
         // CLOSE MODAL
         closeModal.addEventListener('click', () => {
             this.modal.close();
-            // this.clearModalData(this.modal.currentProduct);
         });
 
         // INCREASE QUANTITY
@@ -212,7 +211,11 @@ class App {
 
     updateBasket(product) {
         const totalPrice = document.querySelector('.basket-total-price');
+
+        // if product is added then do nothing
         if (!this.sidebar.basket.isAdded(product)) return;
+
+        // update total price and products
         this.sidebar.basket.updateTotalPrice(totalPrice, this.sidebar.basket.addedProducts);
         this.sidebar.basket.updateProducts();
     }
@@ -286,7 +289,6 @@ class App {
         const modalFooter = document.querySelector('.modal-footer');
 
         nextButton.addEventListener('click', () => {
-            const id = this.modal.currentProduct.id;
             const product = this.modal.currentProduct;
 
             if (this.modal.currentPage === this.modal.menuItems.length) return;
@@ -302,12 +304,16 @@ class App {
                 );
 
                 const button = document.querySelector('.modal-in-basket');
+                const productButton = document.querySelector(
+                    `button.in-basket-button[data-product-card-id="${product.id}"]`
+                );
 
                 if (this.sidebar.basket.isAdded(product)) {
                     this.changeModalButton(button);
                 } else {
                     button.addEventListener('click', () => {
-                        this.addInBasketModal(product);
+                        this.addInBasket(product);
+                        this.changeProductCardButton(productButton);
                         this.modal.close();
                     });
                 }
@@ -319,8 +325,7 @@ class App {
         });
 
         prevButton.addEventListener('click', () => {
-            const modalFooter = document.querySelector('.modal-footer');
-            // const product = this.modal.currentProduct;
+            const product = this.modal.currentProduct;
 
             if (this.modal.currentPage === 1) return;
 
@@ -329,13 +334,25 @@ class App {
 
             this.modal.previousPage();
             this.renderIngridientCards(this.modal.getCategoryItem(this.modal.currentPage));
-            this.ingridientSelectionEvent(this.modal.currentProduct);
+            this.ingridientSelectionEvent(product);
         });
     }
 
     changeModalButton(elem) {
-        elem.textContent = 'ДОБАВЛЕН';
+        elem.textContent = 'ДОБАВЛЕНО';
         elem.style['background'] = 'grey';
+        elem.style['color'] = 'white';
+    }
+
+    changeButtonWithoutModal(elem) {
+        elem.textContent = 'ДОБАВЛЕНО';
+        elem.style['background'] = '#757575';
+        elem.style['color'] = 'white';
+    }
+
+    changeProductCardButton(elem) {
+        elem.textContent = 'ИЗМЕНИТЬ';
+        elem.style['background'] = '#fa6045';
         elem.style['color'] = 'white';
     }
 
@@ -357,8 +374,9 @@ class App {
         }
     }
 
-    addInBasketModal(product) {
+    addInBasket(product) {
         this.sidebar.basket.addProduct(product);
+        product.added = true;
     }
 
     initProductCards() {
