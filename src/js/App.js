@@ -62,6 +62,7 @@ class App {
                     modalContent.innerHTML = '';
                     modalFooter.innerHTML = '';
                     this.modal.open(product);
+                    this.setFalseForMultiple();
                     this.activateSelectedComponents(product);
                     this.renderIngridientCards(ingridientCategory);
                     this.ingridientSelectionEvent(product);
@@ -199,6 +200,13 @@ class App {
         // set selected false
         for (const item of filteredIngridients) {
             item.selected = false;
+        }
+    }
+
+    setFalseForMultiple() {
+        for (const item of this.ingridientCards) {
+            item.selected = false;
+            console.log(item.selected);
         }
     }
 
