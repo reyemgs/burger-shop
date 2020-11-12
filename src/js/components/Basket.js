@@ -28,9 +28,9 @@ export default class Basket {
         if (product.type === 'multiple') {
             basketProduct.append(
                 this.createProductName(product),
-                this.createIngridients(product, data),
                 this.createProductQuantity(product),
-                this.createRemoveButton(product, data)
+                this.createRemoveButton(product, data),
+                this.createIngridients(product, data)
             );
         } else {
             basketProduct.append(
@@ -69,9 +69,9 @@ export default class Basket {
             if (item.type === 'multiple') {
                 basketProduct.append(
                     this.createProductName(item),
-                    this.createIngridients(item, data),
                     this.createProductQuantity(item),
-                    this.createRemoveButton(item, data)
+                    this.createRemoveButton(item, data),
+                    this.createIngridients(item, data)
                 );
             } else {
                 basketProduct.append(
