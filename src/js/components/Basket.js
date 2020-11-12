@@ -105,10 +105,14 @@ export default class Basket {
         }
 
         // reset all ingridients
-        if (this.addedProducts[index].components) {
+        if (this.addedProducts[index].category == 'sandwiches') {
             for (let component in this.addedProducts[index].components) {
                 const product = data.menu.find(item => item.name == this.addedProducts[index].name);
                 this.addedProducts[index].price = product.price;
+                if (Array.isArray(this.addedProducts[index].components[component])) {
+                    this.addedProducts[index].components[component] = [];
+                    continue;
+                }
                 this.addedProducts[index].components[component] = this.components[component];
             }
         }
