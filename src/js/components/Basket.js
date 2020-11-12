@@ -13,7 +13,7 @@ export default class Basket {
         return this.addedProducts.length != 0 && this.addedProducts.some(item => item.id === product.id);
     }
 
-    addProduct(product) {
+    addProduct(product, data) {
         const basketProductsWrapper = document.getElementById('basket-content-wrapper');
         const basketTotalPrice = document.querySelector('.basket-total-price');
 
@@ -25,11 +25,21 @@ export default class Basket {
         const basketProduct = this.createProduct();
         this.addTotalPrice(basketTotalPrice, product);
 
-        basketProduct.append(
-            this.createProductName(product),
-            this.createProductQuantity(product),
-            this.createRemoveButton(product)
-        );
+        if (product.type === 'multiple') {
+            basketProduct.append(
+                this.createProductName(product),
+                this.createIngridients(product, data),
+                this.createProductQuantity(product),
+                this.createRemoveButton(product, data)
+            );
+        } else {
+            basketProduct.append(
+                this.createProductName(product),
+                this.createProductQuantity(product),
+                this.createRemoveButton(product, data)
+            );
+        }
+
         basketProductsWrapper.append(basketProduct);
 
         product.added = true;
@@ -49,18 +59,27 @@ export default class Basket {
         elem.innerHTML = `Итого: ${this.totalPrice} руб.`;
     }
 
-    updateProducts() {
+    updateProducts(data) {
         const basketProductsWrapper = document.getElementById('basket-content-wrapper');
 
         basketProductsWrapper.innerHTML = '';
         for (const item of this.addedProducts) {
             const basketProduct = this.createProduct();
 
-            basketProduct.append(
-                this.createProductName(item),
-                this.createProductQuantity(item),
-                this.createRemoveButton(item)
-            );
+            if (item.type === 'multiple') {
+                basketProduct.append(
+                    this.createProductName(item),
+                    this.createIngridients(item, data),
+                    this.createProductQuantity(item),
+                    this.createRemoveButton(item, data)
+                );
+            } else {
+                basketProduct.append(
+                    this.createProductName(item),
+                    this.createProductQuantity(item),
+                    this.createRemoveButton(item, data)
+                );
+            }
             basketProductsWrapper.append(basketProduct);
         }
     }
@@ -70,7 +89,7 @@ export default class Basket {
         const index = this.addedProducts.findIndex(item => item.id == id);
 
         // if find category equal category then change style of button
-        if (this.findCurrentCategory() == category) {
+        if (this.findCurrentCategoryList() == category) {
             const productButton = document.querySelector(
                 `button.in-basket-button[data-product-card-id="${id}"]`
             );
@@ -83,7 +102,7 @@ export default class Basket {
         this.addedProducts.splice(index, 1);
     }
 
-    findCurrentCategory() {
+    findCurrentCategoryList() {
         const menuItems = document.querySelectorAll('.menu-item');
         let currentCategory = null;
 
@@ -121,14 +140,25 @@ export default class Basket {
         const ingridientWrapper = document.createElement('ul');
         ingridientWrapper.className = 'basket-ingridient-wrapper';
 
-        for (let ingridient of product.components) {
-            const ingridient = document.createElement('li');
-            ingridient.className = 'basket-ingridient';
-            ingridient.innerHTML = data[ingridient];
+        for (let category in product.components) {
+            if (Array.isArray(product.components[category])) {
+                for (let component of product.components[category]) {
+                    const li = document.createElement('li');
+                    li.className = 'basket-ingridient';
+                    li.textContent += data[category][component].name;
+                    ingridientWrapper.append(li);
+                }
+            } else {
+                const li = document.createElement('li');
+                li.className = 'basket-ingridient';
+                li.innerHTML = data[category][product.components[category]].name;
+                ingridientWrapper.append(li);
+            }
         }
+        return ingridientWrapper;
     }
 
-    createRemoveButton(item) {
+    createRemoveButton(item, data) {
         const totalPrice = document.querySelector('.basket-total-price');
         const basketRemoveButton = document.createElement('div');
         basketRemoveButton.className = 'remove-button';
@@ -137,7 +167,7 @@ export default class Basket {
         basketRemoveButton.addEventListener('click', () => {
             this.removeProduct(item.id, item.category);
             this.updateTotalPrice(totalPrice, this.addedProducts);
-            this.updateProducts();
+            this.updateProducts(data);
         });
 
         return basketRemoveButton;

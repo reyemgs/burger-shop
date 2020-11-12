@@ -85,7 +85,7 @@ class App {
                 product.increaseQuantity(productQuantity);
                 if (!this.sidebar.basket.isAdded(product)) return;
                 this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
-                this.sidebar.basket.updateProducts();
+                this.sidebar.basket.updateProducts(this.response);
             });
         }
 
@@ -101,7 +101,7 @@ class App {
                 product.decreaseQuantity(productQuantity);
                 if (!this.sidebar.basket.isAdded(product)) return;
                 this.sidebar.basket.updateTotalPrice(totalPrice, addedProducts);
-                this.sidebar.basket.updateProducts();
+                this.sidebar.basket.updateProducts(this.response);
             });
         }
     }
@@ -246,7 +246,7 @@ class App {
 
         // update total price and products
         this.sidebar.basket.updateTotalPrice(totalPrice, this.sidebar.basket.addedProducts);
-        this.sidebar.basket.updateProducts();
+        this.sidebar.basket.updateProducts(this.response);
     }
 
     // * PAGINATION
@@ -383,7 +383,7 @@ class App {
     }
 
     addInBasket(product) {
-        this.sidebar.basket.addProduct(product);
+        this.sidebar.basket.addProduct(product, this.response);
     }
 
     initProductCards() {
