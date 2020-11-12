@@ -91,7 +91,7 @@ export default class Basket {
         }
     }
 
-    removeProduct(id, category) {
+    removeProduct(id, category, data) {
         // find index of removed item
         const index = this.addedProducts.findIndex(item => item.id == id);
 
@@ -107,6 +107,8 @@ export default class Basket {
         // reset all ingridients
         if (this.addedProducts[index].components) {
             for (let component in this.addedProducts[index].components) {
+                const product = data.menu.find(item => item.name == this.addedProducts[index].name);
+                this.addedProducts[index].price = product.price;
                 this.addedProducts[index].components[component] = this.components[component];
             }
         }
@@ -179,7 +181,7 @@ export default class Basket {
         basketRemoveButton.innerHTML = '<i class="fas fa-trash-alt fa-lg"></i>';
 
         basketRemoveButton.addEventListener('click', () => {
-            this.removeProduct(item.id, item.category);
+            this.removeProduct(item.id, item.category, data);
             this.updateTotalPrice(totalPrice, this.addedProducts);
             this.updateProducts(data);
         });
