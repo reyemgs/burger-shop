@@ -147,11 +147,24 @@ header .fa-bars {
   float: left;
   width: 50%;
   text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fa6045;
 }
 #sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-product-quantity {
   float: left;
   width: 35%;
   text-align: right;
+  font-weight: bolder;
+  font-size: 14px;
+  color: #6b581a;
+}
+#sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-ingridient-wrapper {
+  display: block;
+  text-align: left;
+  width: 80%;
+  margin: 0;
+  padding-left: 15px;
 }
 #sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .remove-button {
   float: right;

@@ -180,11 +180,24 @@ header {
                         float: left;
                         width: 50%;
                         text-align: left;
+                        font-weight: bold;
+                        font-size: 14px;
+                        color: $modal-items;
                     }
                     .basket-product-quantity {
                         float: left;
                         width: 35%;
                         text-align: right;
+                        font-weight: bolder;
+                        font-size: 14px;
+                        color: $yellow-text;
+                    }
+                    .basket-ingridient-wrapper {
+                        display: block;
+                        text-align: left;
+                        width: 80%;
+                        margin: 0;
+                        padding-left: 15px;
                     }
                     .remove-button {
                         float: right;
