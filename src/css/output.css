@@ -214,10 +214,11 @@ header .fa-bars {
   width: 80%;
   margin-left: 20%;
   padding-top: 50px;
+  transition: all 200ms;
 }
 #rightside-wrapper.active {
   width: 100%;
-  margin: 0px;
+  margin-left: 0%;
 }
 #rightside-wrapper .product-card-wrapper {
   display: block;
