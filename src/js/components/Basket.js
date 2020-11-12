@@ -3,6 +3,13 @@ export default class Basket {
         this.sideBar = document.querySelector('#sidebar-wrapper');
         this.addedProducts = [];
         this.totalPrice = 0;
+        this.components = {
+            sizes: '1x',
+            breads: 'white-italian',
+            vegetables: [],
+            sauces: [],
+            fillings: [],
+        };
     }
 
     getProduct(id) {
@@ -95,6 +102,13 @@ export default class Basket {
             );
             productButton.textContent = 'В КОРЗИНУ';
             productButton.removeAttribute('style');
+        }
+
+        // reset all ingridients
+        if (this.addedProducts[index].components) {
+            for (let component in this.addedProducts[index].components) {
+                this.addedProducts[index].components[component] = this.components[component];
+            }
         }
 
         // delete item from basket
