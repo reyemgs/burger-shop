@@ -9,6 +9,7 @@ body {
 }
 
 header {
+  position: fixed;
   margin: auto;
   height: 60px;
   width: 100%;
@@ -48,15 +49,16 @@ header .fa-bars {
 /* SIDEBAR */
 #sidebar-wrapper {
   position: fixed;
-  width: 350px;
-  left: -350px;
+  top: 50px;
+  width: 450px;
+  left: -450px;
   height: 100%;
   transition: all 200ms;
 }
 #sidebar-wrapper.active {
   left: 0px;
   float: left;
-  position: relative;
+  position: fixed;
 }
 #sidebar-wrapper .category-menu {
   padding: 0px;
@@ -140,7 +142,7 @@ header .fa-bars {
 #sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product {
   font-size: 12px;
   display: block;
-  padding: 30px 0px;
+  padding: 35px 0px;
   border-bottom: 2px solid #3585aa;
 }
 #sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-product-name {
@@ -148,7 +150,7 @@ header .fa-bars {
   width: 50%;
   text-align: left;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 13px;
   color: #fa6045;
 }
 #sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-product-quantity {
@@ -156,7 +158,7 @@ header .fa-bars {
   width: 35%;
   text-align: right;
   font-weight: bolder;
-  font-size: 14px;
+  font-size: 13px;
   color: #6b581a;
 }
 #sidebar-wrapper .basket .basket-body .basket-content-wrapper .basket-product .basket-ingridient-wrapper {
@@ -209,7 +211,13 @@ header .fa-bars {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
-  height: 100%;
+  width: 80%;
+  margin-left: 20%;
+  padding-top: 50px;
+}
+#rightside-wrapper.active {
+  width: 100%;
+  margin: 0px;
 }
 #rightside-wrapper .product-card-wrapper {
   display: block;
