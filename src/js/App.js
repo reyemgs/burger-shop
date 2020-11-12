@@ -30,7 +30,7 @@ class App {
             await this.initProductCards();
             await this.initIngridientCards();
             await this.productCategoryEvents();
-            await this.bootCategoryList('sandwiches');
+            await this.bootCategoryList('pizza');
             await this.events();
         })();
     }
@@ -167,6 +167,13 @@ class App {
                 }
                 // add component in array, increase price
                 else {
+                    if (
+                        ingridientCategory == 'sauces' &&
+                        product.components[ingridientCategory].length == 3
+                    ) {
+                        return;
+                    }
+
                     // push ingridients in array
                     product.components[ingridientCategory].push(ingridientItem.key);
                     product.price += ingridientItem.price;
