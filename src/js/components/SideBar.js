@@ -4,6 +4,7 @@ import Basket from './Basket.js';
 export default class SideBar {
     constructor() {
         this.sideBar = document.querySelector('#sidebar-wrapper');
+        this.rightSide = document.querySelector('#rightside-wrapper');
         this.sideBar.className = 'active';
 
         this.sideBarButton = document.querySelector('.fa-bars');
@@ -19,6 +20,7 @@ export default class SideBar {
 
     toggleSideBar() {
         this.sideBar.classList.toggle('active');
+        this.rightSide.classList.toggle('active');
     }
 
     render() {
