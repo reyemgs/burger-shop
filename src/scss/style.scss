@@ -1,10 +1,16 @@
 $yellow: #fad045;
+$yellow-scrollbar: #ff9900;
+$yellow-card: #ff9900d3;
 $yellow-text: #6b581a;
-$yellow-sidebar: #fff8e2; 
+$yellow-sidebar: #fff8e2;
 $white: #ffffff;
 $grey-button: #757575;
 $grey-border: #999999;
+$body-background: #ececec;
 $description: #3585aa;
+$price: #aa3535;
+$modal-items: #fa6045;
+$prev-next-buttons: #e6583f;
 
 @mixin border-top-radius {
     border-top-right-radius: 8px;
@@ -16,13 +22,35 @@ $description: #3585aa;
     border-bottom-left-radius: 8px;
 }
 
+@mixin prev-next-buttons {
+    width: 100px;
+    height: 30px;
+    font-weight: bold;
+    font-size: 18px;
+    border: 2px solid $modal-items;
+    border-radius: 10px;
+    outline: none;
+    color: $white;
+    background: $modal-items;
+    &:hover {
+        background: $yellow-card;
+        border: 2px solid $yellow-scrollbar;
+        color: $yellow-text;
+    }
+}
+
 * {
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
+}
+
+body {
+    background: $body-background;
 }
 
 header {
+    position: fixed;
     margin: auto;
     height: 60px;
     width: 100%;
@@ -45,35 +73,54 @@ header {
     }
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 20px;
+    box-shadow: inset 0 0 2.5px 2px rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, $yellow, $yellow-scrollbar);
+    border-radius: 10px;
+}
+
 /* SIDEBAR */
 #sidebar-wrapper {
     position: fixed;
-    width: 350px;
-    left: -350px;
+    top: 50px;
+    width: 25%;
+    left: -25%;
     height: 100%;
     transition: all 200ms;
     &.active {
-        left: 0px;
-        width: 25%;
+        left: 0%;
         float: left;
-        position: relative;
+        position: fixed;
     }
     .category-menu {
         padding: 0px;
         margin: 20px auto 0px;
         width: 90%;
-        background-color: $white;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        background: $white;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         -webkit-user-select: none;
         .menu-item {
             padding: 10px 15px;
             width: 100%;
             font-size: 20px;
+            font-weight: bold;
             list-style: none;
             color: $yellow-text;
+            &.active {
+                background: linear-gradient(45deg, $yellow, $yellow-card);
+                border-bottom: 2px solid $yellow-card;
+            }
             &:hover {
-                background-color: $yellow;
+                background: linear-gradient(45deg, $yellow, $yellow-card);
             }
             &:first-child {
                 @include border-top-radius();
@@ -88,7 +135,7 @@ header {
         padding: 0px;
         margin: 20px auto 0px;
         width: 90%;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.20);
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         border-radius: 8px;
         -webkit-user-select: none;
         .basket-header {
@@ -99,56 +146,139 @@ header {
             font-weight: bold;
             text-align: center;
             color: $yellow-text;
-            background-color: $yellow;
+            background: $yellow;
         }
         .basket-body {
             @include border-bottom-radius();
-            background-color: $yellow-sidebar;
+            background: $yellow-sidebar;
+            padding-bottom: 5px;
+            .basket-label-wrapper {
+                width: 90%;
+                margin: auto;
+                padding: 25px 15px;
+                border-bottom: 2px solid $yellow-text;
+                .basket-name-label {
+                    float: left;
+                    width: 50%;
+                    text-align: left;
+                }
+                .basket-quantity-label {
+                    float: right;
+                    width: 50%;
+                    text-align: right;
+                }
+            }
+            .basket-content-wrapper {
+                display: block;
+                width: 90%;
+                max-height: 265px;
+                margin: auto;
+                padding: 5px 15px;
+                overflow-y: scroll;
+                .basket-product {
+                    font-size: 12px;
+                    display: block;
+                    padding: 35px 0px;
+                    border-bottom: 2px solid $description;
+                    .basket-product-name {
+                        float: left;
+                        width: 50%;
+                        text-align: left;
+                        font-weight: bold;
+                        font-size: 13px;
+                        color: $modal-items;
+                    }
+                    .basket-product-quantity {
+                        float: left;
+                        width: 35%;
+                        text-align: right;
+                        font-weight: bolder;
+                        font-size: 13px;
+                        color: $yellow-text;
+                    }
+                    .basket-ingridient-wrapper {
+                        display: block;
+                        text-align: left;
+                        width: 80%;
+                        margin: 0;
+                        padding-left: 15px;
+                    }
+                    .remove-button {
+                        float: right;
+                        height: 18px;
+                        color: $yellow-text;
+                        &:hover {
+                            color: $modal-items;
+                        }
+                    }
+                }
+            }
+            .basket-total-price {
+                display: block;
+                margin: auto;
+                padding: 15px;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+                color: $yellow-text;
+            }
             .order-button {
+                display: block;
+                margin: 10px auto;
                 height: 30px;
                 width: 150px;
-                transform: translate(55%, 0);
-                left: 50%;
                 text-align: center;
                 font-weight: bold;
                 border: 2px solid $grey-border;
                 border-radius: 8px;
                 outline: none;
-                background-color: $grey-button;
+                background: $grey-button;
                 color: white;
                 transition: 0.1s;
                 overflow: hidden;
                 &:hover {
-                    background-color: $yellow;
-                    color: $yellow-text;
+                    background: $modal-items;
+                    color: $white;
                 }
             }
         }
     }
 }
 
+/* RIGHTSIDE */
 #rightside-wrapper {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
     flex-direction: row;
-    height: 100%;
+    width: 80%;
+    margin-left: 20%;
+    padding-top: 50px;
+    transition: all 200ms;
+    &.active {
+        width: 100%;
+        margin-left: 0%;
+    }
     .product-card-wrapper {
-        width: 30%;
+        display: block;
+        width: 280px;
         margin: 20px;
-        margin-bottom: 30px;
-        height: 300px;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        height: 100%;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
         -webkit-user-select: none;
         .product-market {
             display: block;
             margin: auto;
         }
         .product-image {
-            display: block; 
+            display: block;
             margin: auto;
             width: 200px;
             height: 200px;
+            background: $white;
             border: 10px solid $yellow;
             border-radius: 200px;
         }
@@ -163,13 +293,340 @@ header {
         .product-description {
             margin: auto;
             width: 200px;
+            height: 50px;
             padding: 5px;
-            font-size: 15px;
+            font-size: 12px;
             text-align: center;
             text-decoration: underline;
             border-top: 4px solid $description;
             border-bottom: 4px solid $description;
             color: $description;
         }
+        .product-price {
+            display: block;
+            padding: 5px;
+            margin: auto;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: $price;
+        }
+
+        .set-quantity-wrapper {
+            width: 200px;
+            height: 125px;
+            margin: auto;
+            text-align: center;
+            border-radius: 8px;
+            .product-quantity-label {
+                display: block;
+            }
+            .product-quantity {
+                display: inline-block;
+                background: $white;
+                margin: auto;
+                width: 40px;
+                height: 20px;
+                border: 1px solid $grey-border;
+                border-radius: 5px;
+            }
+            .increase-button,
+            .decrease-button {
+                display: inline-block;
+                padding: 10px 20px;
+                color: $yellow-text;
+                &:hover {
+                    color: $modal-items;
+                }
+            }
+            .in-basket-button {
+                display: block;
+                margin: 10px auto;
+                width: 150px;
+                height: 40px;
+                color: $yellow-text;
+                font-size: 18px;
+                font-weight: bold;
+                outline: none;
+                background: $yellow;
+                border-radius: 8px;
+            }
+        }
+    }
+}
+
+.modal-wrapper {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+    margin: auto;
+    -webkit-user-select: none;
+    &.active {
+        display: block;
+        position: fixed;
+        left: 25%;
+        top: 10%;
+        visibility: visible;
+        opacity: 1;
+        z-index: 1000;
+        width: 50%;
+        opacity: 1;
+        transition: opacity 0.15s ease;
+        background: $body-background;
+        border-radius: 10px;
+    }
+    .modal-header {
+        height: 50px;
+        background: $yellow;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        text-align: center;
+        .modal-title {
+            display: block;
+            padding-top: 8px;
+            font-size: 30px;
+            font-weight: bold;
+            color: white;
+        }
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 8px;
+            color: $yellow-text;
+            &:hover {
+                color: $modal-items;
+            }
+        }
+    }
+    .items-wrapper {
+        padding: 20px;
+        margin: auto;
+        margin-bottom: 20px;
+        height: 50px;
+        text-align: center;
+        vertical-align: bottom;
+        .previous-button {
+            display: inline;
+            @include prev-next-buttons();
+        }
+        .next-button {
+            display: inline;
+            @include prev-next-buttons();
+        }
+        .items-list {
+            display: inline;
+            padding: 20px;
+            .modal-menu-item {
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+                display: inline;
+                padding: 10px;
+                width: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: $yellow-text;
+                background-color: $white;
+                -webkit-user-select: none;
+                &:first-child {
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                }
+                &:last-child {
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                }
+                &.active {
+                    background: $modal-items;
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        height: 500px;
+        overflow-y: scroll;
+        .ingridient-wrapper {
+            width: 220px;
+            height: 280px;
+            margin: 5px;
+            padding: 5px;
+            -webkit-user-select: none;
+            &.active {
+                background: linear-gradient(45deg, $yellow, $yellow-card);
+                border-radius: 10px;
+                .ingridient-image {
+                    border: 8px solid $modal-items;
+                }
+                &:hover {
+                    background: linear-gradient(45deg, $yellow, $yellow-card);
+                    border-radius: 10px;
+                    .ingridient-image {
+                        border: 8px solid $modal-items;
+                    }
+                }
+            }
+            &:hover {
+                background: $yellow-sidebar;
+                border-radius: 10px;
+                .ingridient-image {
+                    border: 8px solid $modal-items;
+                }
+            }
+            .ingridient-image {
+                width: 200px;
+                height: 200px;
+                display: block;
+                margin: auto;
+                border: 8px solid $yellow;
+                border-radius: 100px;
+            }
+            .ingridient-name {
+                display: block;
+                text-align: center;
+                font-size: 20px;
+                font-weight: bold;
+                color: $yellow-text;
+                border-bottom: 2px solid $modal-items;
+                padding-bottom: 5px;
+            }
+            .ingridient-price {
+                display: block;
+                text-align: center;
+                padding-top: 5px;
+                color: $price;
+            }
+        }
+
+        .done-wrapper {
+            display: block;
+            // position: absolute;
+            margin: 100px auto;
+            text-align: center;
+            width: 60%;
+            float: right;
+            .done-header {
+                display: block;
+                font-size: 30px;
+                font-weight: bold;
+                border-bottom: 2px solid $modal-items;
+                color: $yellow-text;
+            }
+            .done-info {
+                display: block;
+                text-align: left;
+                border-bottom: 2px solid $modal-items;
+                .done-size,
+                .done-bread,
+                .done-vegetables,
+                .done-sauces,
+                .done-fillings {
+                    display: block;
+                    padding: 10px;
+                    font-size: 22px;
+                }
+            }
+            .done-name {
+                display: block;
+                font-size: 30px;
+                font-weight: bold;
+                color: $modal-items;
+            }
+        }
+
+        .product-image {
+            display: block;
+            margin: 120px auto;
+            float: left;
+            width: 250px;
+            height: 250px;
+            border: 8px solid $yellow;
+            border-radius: 150px;
+        }
+    }
+
+    .modal-footer {
+        height: 100px;
+        text-align: center;
+        border-top: 4px solid $yellow;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        background: $yellow-sidebar;
+        .modal-in-basket {
+            display: block;
+            margin: auto;
+            width: 130px;
+            height: 35px;
+            color: $yellow-text;
+            font-size: 15px;
+            font-weight: bold;
+            outline: none;
+            background: $yellow;
+            border-radius: 8px;
+        }
+        .modal-price {
+            display: block;
+            margin: 25px auto;
+            text-align: center;
+            font-size: 25px;
+            font-weight: bold;
+            color: $modal-items;
+        }
+        .modal-total-price {
+            display: block;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: $modal-items;
+        }
+        .modal-product-quantity {
+            display: inline-block;
+            text-align: center;
+            background: $white;
+            margin: auto;
+            width: 40px;
+            height: 20px;
+            border: 1px solid $grey-border;
+            border-radius: 5px;
+        }
+        .modal-increase-button,
+        .modal-decrease-button {
+            display: inline-block;
+            text-align: center;
+            margin: auto;
+            padding: 5px 10px;
+            color: $yellow-text;
+            &:hover {
+                color: $modal-items;
+            }
+        }
+    }
+}
+
+.shadow-modal {
+    visibility: hidden;
+    opacity: 0;
+    &.active {
+        visibility: visible;
+        position: fixed;
+        border: none;
+        display: block;
+        width: 100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 98;
+        opacity: 0;
+        transition: opacity 0.15s ease;
+        background-color: black;
+        pointer-events: auto;
+        opacity: 0.6;
     }
 }
