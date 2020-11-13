@@ -5,6 +5,8 @@ import Modal from './components/Modal.js';
 import IngridientCard from './components/IngridientCard.js';
 import ProductCategoryList from './components/ProductCategoryList.js';
 
+// TODO: реализовать связь между классами через Pub/sub
+// FIXME: убрать передачу this.response во многих методах
 class App {
     constructor() {
         this.response = null;
